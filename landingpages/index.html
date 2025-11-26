@@ -1,0 +1,1986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Rockridge Global Preschool – Bachupally & Manikonda Branches</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-dark: #1d4ed8;
+      --accent: #fbbf24;
+      --bg-soft: #f9fafb;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --white: #ffffff;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --shadow-soft: 0 14px 30px rgba(15, 23, 42, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      color: var(--text-main);
+      background: var(--bg-soft);
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 40px 20px 60px;
+    }
+
+
+    /* HERO */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 80px 5%;
+      margin-bottom: 0;
+      overflow: hidden;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(175, 216, 29, 0.85) 0%, rgba(59, 130, 246, 0.75) 50%, rgba(251, 191, 36, 0.3) 100%);
+      z-index: 1;
+    }
+
+    .hero-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      animation: slideInLeft 0.8s ease-out;
+    }
+
+    .hero-left {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-right {
+      position: relative;
+      z-index: 2;
+      animation: slideInRight 0.8s ease-out 0.2s both;
+    }
+
+    .hero-form {
+      background: rgb(255 255 255 / 50%);;
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 100%;
+    }
+
+    .hero-form h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 8px;
+    }
+
+    .hero-form p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .hero-left h1 {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      line-height: 1.1;
+      margin-bottom: 20px;
+      color: var(--white);
+      font-weight: 800;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .hero-left h1 span {
+      color: var(--accent);
+      display: block;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(255, 255, 255, 0.95);
+      margin-bottom: 24px;
+      max-width: 580px;
+      line-height: 1.6;
+      text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+      animation: slideInLeft 0.8s ease-out 0.2s both;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(10px);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .badge:hover {
+      background: rgba(255, 255, 255, 0.35);
+      transform: scale(1.05);
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 16px;
+      animation: slideInLeft 0.8s ease-out 0.3s both;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: var(--white);
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      box-shadow: 0 10px 22px rgba(37, 99, 235, 0.35);
+      transition: transform 0.1s ease, box-shadow 0.1s ease,
+        filter 0.1s ease;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.03);
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(37, 99, 235, 0.45);
+    }
+
+    .btn-ghost {
+      border-radius: 999px;
+      border: 2px solid rgba(255, 255, 255, 0.9);
+      padding: 10px 18px;
+      font-size: 0.9rem;
+      color: var(--white);
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      transition: all 0.3s ease;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--white);
+      color: var(--white);
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .hero-note {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.9);
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .hero-right {
+      position: relative;
+    }
+
+    .hero-card {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 16px 16px 12px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.18);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card-tag {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      background: var(--accent);
+      color: #7c2d12;
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+
+    .hero-illus {
+      height: 180px;
+      border-radius: 18px;
+      overflow: hidden;
+      margin-bottom: 14px;
+      background: linear-gradient(120deg, #93c5fd, #f9a8d4, #facc15);
+      position: relative;
+    }
+
+    @media (max-width: 840px) {
+      .hero-illus {
+        height: 160px;
+      }
+    }
+
+    .hero-illus img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+
+    .hero-card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .meta-item {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .meta-item strong {
+      display: block;
+      color: var(--text-main);
+      font-size: 0.9rem;
+    }
+
+    /* SECTION WRAPPER / HEADINGS */
+    section {
+      margin-bottom: 80px;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+    }
+
+    .section-kicker {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary-dark);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .section-sub {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* FEATURES / WHY US */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .feature-card {
+      background: var(--white);
+      padding: 20px;
+      border-radius: var(--radius-lg);
+      box-shadow: 0 9px 20px rgba(15, 23, 42, 0.08);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(59, 130, 246, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+      flex-shrink: 0;
+    }
+
+    .feature-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      transition: transform 0.4s ease, filter 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.15);
+    }
+
+    .feature-card:hover .feature-image {
+      transform: scale(1.05);
+      filter: brightness(1.1);
+    }
+
+    .feature-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+      font-size: 0.98rem;
+    }
+
+    .feature-body {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    /* PROGRAM / DAY SCHEDULE */
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 32px;
+      align-items: start;
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .pill {
+      background: rgba(15, 23, 42, 0.04);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .schedule {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: 0 9px 20px rgba(15, 23, 42, 0.08);
+      font-size: 0.86rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .schedule:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+    }
+
+    .schedule-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px dashed rgba(148, 163, 184, 0.6);
+    }
+
+    .schedule-row:last-child {
+      border-bottom: none;
+    }
+
+    .schedule-time {
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .schedule-activity {
+      color: var(--text-muted);
+    }
+
+    /* GALLERY SECTION */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 32px;
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.1);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.2);
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .gallery-item:hover::after {
+      opacity: 1;
+    }
+
+    /* TESTIMONIALS */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .testimonial-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: 0 9px 20px rgba(15, 23, 42, 0.08);
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.12);
+    }
+
+    .testimonial-quote {
+      font-size: 0.9rem;
+      color: var(--text-main);
+      margin-bottom: 10px;
+    }
+
+    .testimonial-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .quote-mark {
+      position: absolute;
+      font-size: 2.5rem;
+      opacity: 0.1;
+      top: 8px;
+      right: 14px;
+    }
+
+    /* FAQ */
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+    }
+
+    .faq-item {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .faq-item:hover {
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.1);
+      transform: translateY(-2px);
+      border-color: var(--primary);
+    }
+
+    .faq-q {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+
+    .faq-a {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* LOCATIONS SECTION */
+    .locations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 32px;
+    }
+
+    .location-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: 0 9px 20px rgba(15, 23, 42, 0.08);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .location-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+    }
+
+    .location-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.15);
+    }
+
+    .location-name {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .location-name::before {
+      content: '📍';
+      font-size: 1.2rem;
+    }
+
+    .location-address {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+
+    .location-phone {
+      font-size: 0.9rem;
+      color: var(--text-main);
+      margin-bottom: 16px;
+      padding: 8px 0;
+    }
+
+    .location-map {
+      margin-bottom: 16px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.1);
+    }
+
+    .location-map iframe {
+      width: 100%;
+      height: 250px;
+      border: none;
+      display: block;
+    }
+
+    .location-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--primary);
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 8px;
+      background: rgba(59, 130, 246, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .location-link:hover {
+      background: rgba(59, 130, 246, 0.2);
+      transform: translateX(4px);
+    }
+
+    .location-link::after {
+      content: '→';
+      transition: transform 0.3s ease;
+    }
+
+    .location-link:hover::after {
+      transform: translateX(4px);
+    }
+
+    /* CONTACT / FORM */
+    .contact-section {
+      background: linear-gradient(120deg, #dbeafe, #fef9c3);
+      border-radius: 24px;
+      padding: 40px 32px;
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 32px;
+      margin-bottom: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(251, 191, 36, 0.2) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: pulse 6s ease-in-out infinite;
+    }
+
+    .contact-left {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .contact-image-wrapper {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.15);
+      margin-bottom: 8px;
+    }
+
+    .contact-image-wrapper img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .contact-image-wrapper:hover img {
+      transform: scale(1.02);
+    }
+
+    .contact-tagline {
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+
+    .contact-text {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .contact-meta {
+      font-size: 0.85rem;
+      color: #1e293b;
+      margin-top: 10px;
+    }
+
+    .contact-meta strong {
+      color: var(--primary-dark);
+    }
+
+    form {
+      background: rgb(255 255 255 / 50%);;
+      padding: 16px;
+      border-radius: 18px;
+      box-shadow: 0 9px 20px rgba(15, 23, 42, 0.12);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .form-row {
+      margin-bottom: 10px;
+    }
+
+    .form-row.full-width {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      font-size: 0.75rem;
+      margin-bottom: 2px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 6px 8px;
+      border-radius: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      font-size: 0.8rem;
+      font-family: inherit;
+      outline: none;
+      background: rgb(255 255 255 / 10%);
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.25);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    .form-footnote {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* FOOTER */
+    footer {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      border-top: 1px solid rgba(148, 163, 184, 0.35);
+      padding-top: 12px;
+    }
+
+    footer span {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 840px) {
+      .two-col,
+      .contact-section {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero {
+        min-height: 100vh;
+        padding: 60px 5%;
+        margin-bottom: 0;
+      }
+
+      .hero-content {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 40px;
+      }
+
+      .hero-form {
+        padding: 20px;
+      }
+
+      .form-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .features-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 16px;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+      }
+
+      .testimonials-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+      }
+
+      .faq-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+      }
+
+      .locations-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 20px;
+      }
+
+      .contact-left {
+        gap: 16px;
+      }
+
+      .contact-image-wrapper {
+        margin-bottom: 0;
+      }
+
+      .contact-section {
+        padding: 32px 20px;
+      }
+
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 24px;
+      }
+
+      .section-sub {
+        margin-top: 8px;
+      }
+
+      .pill-list {
+        gap: 6px;
+      }
+
+      .pill {
+        font-size: 0.75rem;
+        padding: 4px 8px;
+      }
+
+      section {
+        margin-bottom: 60px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        padding: 24px 12px 40px;
+      }
+
+      .hero {
+        min-height: 100vh;
+        padding: 80px 5% 40px;
+        margin-bottom: 0;
+      }
+
+      .hero-content {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 32px;
+      }
+
+      .hero-form {
+        padding: 18px;
+      }
+
+      .hero-form h3 {
+        font-size: 1.1rem;
+      }
+
+      .form-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-left h1 {
+        font-size: clamp(2rem, 6vw, 2.8rem);
+        margin-bottom: 16px;
+      }
+
+      .hero-subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+      }
+
+      .hero-badges {
+        margin-bottom: 20px;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+
+      .badge {
+        font-size: 0.75rem;
+        padding: 5px 10px;
+      }
+
+      .hero-ctas {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+
+      .btn-primary,
+      .btn-ghost {
+        text-align: center;
+        width: 100%;
+        justify-content: center;
+        display: inline-flex;
+        padding: 12px 20px;
+      }
+
+      .hero-note {
+        font-size: 0.8rem;
+      }
+
+      .features-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+      }
+
+      .feature-card {
+        padding: 16px;
+      }
+
+      .feature-image {
+        height: 180px;
+        margin-bottom: 10px;
+      }
+
+      .feature-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+      }
+
+      .gallery-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+      }
+
+      .gallery-item {
+        aspect-ratio: 4/3;
+      }
+
+      .two-col {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 20px;
+      }
+
+      .schedule {
+        padding: 16px;
+      }
+
+      .schedule-row {
+        flex-direction: column;
+        gap: 4px;
+        padding: 8px 0;
+      }
+
+      .schedule-time {
+        font-size: 0.85rem;
+      }
+
+      .testimonials-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+      }
+
+      .testimonial-card {
+        padding: 16px;
+      }
+
+      .faq-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+      }
+
+      .faq-item {
+        padding: 14px;
+      }
+
+      .contact-section {
+        padding: 24px 16px;
+        border-radius: 20px;
+        gap: 24px;
+      }
+
+      .contact-tagline {
+        font-size: 1rem;
+      }
+
+      .contact-text {
+        font-size: 0.85rem;
+      }
+
+      .contact-meta {
+        font-size: 0.8rem;
+      }
+
+      .contact-image-wrapper {
+        border-radius: 12px;
+      }
+
+      .locations-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 20px;
+      }
+
+      .location-card {
+        padding: 20px;
+      }
+
+      .location-map iframe {
+        height: 200px;
+      }
+
+      .section-title {
+        font-size: 1.1rem;
+      }
+
+      .section-kicker {
+        font-size: 0.75rem;
+      }
+
+      .section-sub {
+        font-size: 0.85rem;
+      }
+
+      form {
+        padding: 16px;
+      }
+
+      .form-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 8px;
+      }
+
+      .form-row {
+        margin-bottom: 10px;
+      }
+
+      label {
+        font-size: 0.8rem;
+      }
+
+      input,
+      select,
+      textarea {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+      }
+
+      footer {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 8px;
+      }
+    }
+
+
+    /* ============================
+   TOP NAVIGATION / LOGO BAR
+============================ */
+    .topnav {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .topnav.scrolled {
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 6px 20px rgba(15, 23, 42, 0.12);
+    }
+
+.nav-container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-logo img {
+  width: 55px;
+  height: 55px;
+  object-fit: contain;
+  display: block;
+}
+
+.nav-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1d4ed8; /* Blue to match theme */
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.nav-links a {
+  font-size: 0.9rem;
+  color: #374151;
+  transition: 0.2s;
+}
+
+.nav-links a:hover {
+  color: #1d4ed8;
+}
+
+.nav-cta {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white !important;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+/* MOBILE NAVIGATION */
+@media (max-width: 720px) {
+  .nav-links {
+    display: none; /* Hide links for simple version */
+  }
+
+  .nav-title {
+    font-size: 0.95rem;
+  }
+
+  .nav-logo img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .nav-container {
+    padding: 8px 12px;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <!-- TOP NAVIGATION WITH LOGO -->
+  <header class="topnav">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="ROCKRIDGE-LOGO.png" alt="Rockridge Global Preschool Logo" />
+        <span class="nav-title">Rockridge Global Preschool</span>
+      </div>
+  
+      <nav class="nav-links">
+        <a href="#why">Why Us</a>
+        <a href="#programs">Programs</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#faq">FAQ</a>
+        <a href="#locations">Locations</a>
+        <a href="#contact" class="nav-cta">Enroll Now</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <img 
+      src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=1920&h=1080&fit=crop" 
+      alt="Happy children learning and playing at Rockridge Global Preschool" 
+      class="hero-background"
+      loading="eager"
+    />
+      <div class="hero-content">
+        <div class="hero-left">
+          <h1>
+            Where Every Child <span>Blossoms</span>
+          </h1>
+          <p class="hero-subtitle">
+            Trusted Preschool in Bachupally & Manikonda | Nurturing Young Minds<br />
+            A nurturing preschool environment that combines play-based learning with 
+            emotional security, helping your child grow confident, curious, and ready for the world.
+          </p>
+          <div class="hero-badges">
+            <span class="badge">
+              <span class="badge-dot"></span>
+              Ages 2-5
+            </span>
+            <span class="badge">
+              <span class="badge-dot"></span>
+              Play-Based Learning
+            </span>
+            <span class="badge">
+              <span class="badge-dot"></span>
+              Safe & Secure
+            </span>
+          </div>
+          <p class="hero-note">
+            ✓ Low child-teacher ratio · ✓ Qualified educators · ✓ Bright, hygienic spaces
+          </p>
+        </div>
+        <div class="hero-right">
+          <div class="hero-form">
+            <h3>📝 Quick Enquiry</h3>
+            <p>Fill in your details and we'll get back to you soon</p>
+            <form>
+              <div class="form-grid">
+                <div class="form-row">
+                  <label for="heroParentName">Parent's Name</label>
+                  <input type="text" id="heroParentName" name="parentName" placeholder="Your full name" />
+                </div>
+                <div class="form-row">
+                  <label for="heroPhone">Mobile Number</label>
+                  <input type="tel" id="heroPhone" name="phone" placeholder="+91..." />
+                </div>
+                <div class="form-row">
+                  <label for="heroPreferredBranch">Preferred Branch</label>
+                  <select id="heroPreferredBranch" name="preferredBranch">
+                    <option value="">Select branch</option>
+                    <option>Bachupally Branch</option>
+                    <option>Manikonda Branch</option>
+                    <option>Either branch</option>
+                  </select>
+                </div>
+                <div class="form-row">
+                  <label for="heroChildAge">Child's Age</label>
+                  <select id="heroChildAge" name="childAge">
+                    <option value="">Select age</option>
+                    <option>2 years</option>
+                    <option>3 years</option>
+                    <option>4 years</option>
+                    <option>5 years</option>
+                  </select>
+                </div>
+                <div class="form-row full-width">
+                  <label for="heroPreferredTime">Preferred time to contact</label>
+                  <select id="heroPreferredTime" name="preferredTime">
+                    <option value="">Any time</option>
+                    <option>Morning (9 AM – 12 PM)</option>
+                    <option>Afternoon (12 PM – 4 PM)</option>
+                    <option>Evening (4 PM – 7 PM)</option>
+                  </select>
+                </div>
+                <div class="form-row full-width">
+                  <label for="heroMessage">Any questions?</label>
+                  <textarea id="heroMessage" name="message" placeholder="Tell us about your child..."></textarea>
+                </div>
+                <div class="form-row full-width">
+                  <button type="submit" class="btn-primary" style="width:100%; padding: 10px;">
+                    Enquire Now – Schedule My Tour
+                  </button>
+                </div>
+              </div>
+              <p class="form-footnote" style="font-size: 0.7rem; margin-top: 8px;">
+                By submitting you agree to be contacted via phone or WhatsApp.
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <div class="page" style="padding-top: 40px;">
+    <!-- WHY US -->
+    <section id="why">
+      <div class="section-header">
+        <div>
+          <div class="section-kicker">Why parents choose us</div>
+          <h2 class="section-title">A preschool built around your child’s needs</h2>
+        </div>
+        <p class="section-sub">
+          We combine early-years education best practices with a warm,
+          family-like atmosphere.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <article class="feature-card">
+          <img 
+            src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=400&h=300&fit=crop" 
+            alt="Secure preschool entrance with safety measures" 
+            class="feature-image"
+            loading="lazy"
+          />
+          <div class="feature-icon">🔒</div>
+          <h3 class="feature-title">Safe & secure environment</h3>
+          <p class="feature-body">
+            CCTV-enabled campus, secure entry/exit and trained staff so you feel
+            confident leaving your little one with us.
+          </p>
+        </article>
+
+        <article class="feature-card">
+          <img 
+            src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=300&fit=crop" 
+            alt="Qualified teacher engaging with children" 
+            class="feature-image"
+            loading="lazy"
+          />
+          <div class="feature-icon">👩‍🏫</div>
+          <h3 class="feature-title">Qualified, caring teachers</h3>
+          <p class="feature-body">
+            Experienced early-years educators focused on emotional security and
+            age-appropriate learning.
+          </p>
+        </article>
+
+        <article class="feature-card">
+          <img 
+            src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=400&h=300&fit=crop" 
+            alt="Children playing and learning through activities" 
+            class="feature-image"
+            loading="lazy"
+          />
+          <div class="feature-icon">🧸</div>
+          <h3 class="feature-title">Play-based learning</h3>
+          <p class="feature-body">
+            Hands-on activities, stories, music and movement ensure children
+            learn through curiosity and fun.
+          </p>
+        </article>
+
+        <article class="feature-card">
+          <img 
+            src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=400&h=300&fit=crop" 
+            alt="Bright and colorful preschool classroom" 
+            class="feature-image"
+            loading="lazy"
+          />
+          <div class="feature-icon">🏡</div>
+          <h3 class="feature-title">Bright, hygienic spaces</h3>
+          <p class="feature-body">
+            Clean, colourful classrooms and child-safe furniture designed for
+            comfort, hygiene and exploration.
+          </p>
+        </article>
+
+        <article class="feature-card">
+          <img 
+            src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&h=300&fit=crop" 
+            alt="Small group learning with personal attention" 
+            class="feature-image"
+            loading="lazy"
+          />
+          <div class="feature-icon">👫</div>
+          <h3 class="feature-title">Low child-teacher ratio</h3>
+          <p class="feature-body">
+            Small groups ensure every child gets personal attention, support
+            and encouragement.
+          </p>
+        </article>
+
+        <article class="feature-card">
+          <img 
+            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop" 
+            alt="Preschool building with convenient location" 
+            class="feature-image"
+            loading="lazy"
+          />
+          <div class="feature-icon">📍</div>
+          <h3 class="feature-title">Convenient location</h3>
+          <p class="feature-body">
+            Easily accessible location with nearby parking and safe pick-up /
+            drop-off zones.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- GALLERY SECTION -->
+    <section class="gallery-section">
+      <div class="section-header">
+        <div>
+          <div class="section-kicker">Our Campus</div>
+          <h2 class="section-title">See Our Learning Environment</h2>
+        </div>
+        <p class="section-sub">
+          Bright, safe, and inspiring spaces where children explore, learn, and grow.
+        </p>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img 
+            src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=400&h=300&fit=crop" 
+            alt="Colorful preschool classroom with learning materials" 
+            loading="lazy"
+          />
+        </div>
+        <div class="gallery-item">
+          <img 
+            src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=400&h=300&fit=crop" 
+            alt="Children playing in outdoor play area" 
+            loading="lazy"
+          />
+        </div>
+        <div class="gallery-item">
+          <img 
+            src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&h=300&fit=crop" 
+            alt="Children engaged in art and craft activities" 
+            loading="lazy"
+          />
+        </div>
+        <div class="gallery-item">
+          <img 
+            src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=300&fit=crop" 
+            alt="Teacher reading story to children" 
+            loading="lazy"
+          />
+        </div>
+        <div class="gallery-item">
+          <img 
+            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop" 
+            alt="Preschool library corner with books" 
+            loading="lazy"
+          />
+        </div>
+        <div class="gallery-item">
+          <img 
+            src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=400&h=300&fit=crop" 
+            alt="Children having snack time together" 
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- PROGRAM & DAY SCHEDULE -->
+    <section id="programs">
+      <div class="section-header">
+        <div>
+          <div class="section-kicker">Program overview</div>
+          <h2 class="section-title">How we structure your child’s day</h2>
+        </div>
+        <p class="section-sub">
+          A predictable routine that blends learning, play, rest and social
+          time to support whole-child development.
+        </p>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <div style="margin-bottom: 20px; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 24px rgba(15, 23, 42, 0.1);">
+            <img 
+              src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600&h=400&fit=crop" 
+              alt="Children learning through play-based activities" 
+              style="width: 100%; height: 250px; object-fit: cover;"
+              loading="lazy"
+            />
+          </div>
+          <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:4px;">
+            Our curriculum focuses on:
+          </p>
+          <div class="pill-list">
+            <span class="pill">Language & early literacy</span>
+            <span class="pill">Numbers & pre-math</span>
+            <span class="pill">Fine & gross motor skills</span>
+            <span class="pill">Social-emotional learning</span>
+            <span class="pill">Art, music & movement</span>
+            <span class="pill">Practical life skills</span>
+          </div>
+          <p style="margin-top:12px; font-size:0.88rem; color:var(--text-muted);">
+            Each week has a theme (animals, seasons, community helpers, colours,
+            etc.) so children keep discovering new concepts in a playful,
+            connected way.
+          </p>
+        </div>
+
+        <aside class="schedule">
+          <strong style="font-size:0.92rem; display:block; margin-bottom:6px;">
+            A day at Rockridge Global Preschool (sample schedule)
+          </strong>
+
+          <div class="schedule-row">
+            <div class="schedule-time">08:30 – 09:00</div>
+            <div class="schedule-activity">Arrival, free play & settling in</div>
+          </div>
+          <div class="schedule-row">
+            <div class="schedule-time">09:00 – 09:30</div>
+            <div class="schedule-activity">Circle time & songs</div>
+          </div>
+          <div class="schedule-row">
+            <div class="schedule-time">09:30 – 10:15</div>
+            <div class="schedule-activity">Theme-based activities / centers</div>
+          </div>
+          <div class="schedule-row">
+            <div class="schedule-time">10:15 – 10:30</div>
+            <div class="schedule-activity">Snack & washroom break</div>
+          </div>
+          <div class="schedule-row">
+            <div class="schedule-time">10:30 – 11:15</div>
+            <div class="schedule-activity">Outdoor play / gross motor time</div>
+          </div>
+          <div class="schedule-row">
+            <div class="schedule-time">11:15 – 11:45</div>
+            <div class="schedule-activity">Stories & quiet activities</div>
+          </div>
+          <div class="schedule-row">
+            <div class="schedule-time">11:45 – 01:00</div>
+            <div class="schedule-activity">Lunch, nap / calm down & dispersal</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section id="testimonials">
+      <div class="section-header">
+        <div>
+          <div class="section-kicker">Testimonials</div>
+          <h2 class="section-title">Parents love the way their kids grow here</h2>
+        </div>
+        <p class="section-sub">
+          Hear from families who once had the same questions you do now.
+        </p>
+      </div>
+
+      <div class="testimonials-grid">
+        <article class="testimonial-card">
+          <div class="quote-mark">"</div>
+          <p class="testimonial-quote">
+            "Our daughter used to be shy, but after a few weeks at
+            Rockridge Global Preschool she started singing, talking and making friends.
+            She loves going to 'school' every morning!"
+          </p>
+          <p class="testimonial-meta">
+            — Parent of Aanya, Age 3
+          </p>
+        </article>
+
+        <article class="testimonial-card">
+          <div class="quote-mark">"</div>
+          <p class="testimonial-quote">
+            "I appreciate the regular updates and photos on WhatsApp. It feels
+            like we are part of her day even when we're at work."
+          </p>
+          <p class="testimonial-meta">
+            — Parent of Kabir, Age 4
+          </p>
+        </article>
+
+        <article class="testimonial-card">
+          <div class="quote-mark">"</div>
+          <p class="testimonial-quote">
+            "The teachers are so patient and caring. My son has learned so much
+            and made wonderful friends. The play-based approach really works!"
+          </p>
+          <p class="testimonial-meta">
+            — Parent of Rohan, Age 4
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <div class="section-header">
+        <div>
+          <div class="section-kicker">Frequently Asked Questions</div>
+          <h2 class="section-title">Common Questions from Parents</h2>
+        </div>
+        <p class="section-sub">
+          Find answers to the most common questions about our programs and enrollment process.
+        </p>
+      </div>
+
+      <div class="faq-grid">
+        <div class="faq-item">
+          <div class="faq-q">What age groups do you accept?</div>
+          <div class="faq-a">
+            We currently accept children from 2 to 5 years, grouped by age and
+            developmental stage.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What are your safety and hygiene practices?</div>
+          <div class="faq-a">
+            Daily cleaning, frequent sanitisation of high-touch areas, secure
+            entry/exit, background-checked staff and regular safety drills.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Do you provide snacks or meals?</div>
+          <div class="faq-a">
+            We offer a healthy snack option and have a clear food policy.
+            Parents can also send food based on their child's needs.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">How do I start the admission process?</div>
+          <div class="faq-a">
+            Simply fill in the enquiry form below or call us. Our team will
+            help you with a tour, fee structure and enrollment steps.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What are your operating hours?</div>
+          <div class="faq-a">
+            Our preschool operates from Monday to Friday, 8:30 AM to 1:00 PM.
+            Extended hours may be available upon request.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Do you offer transportation services?</div>
+          <div class="faq-a">
+            Transportation services may be available depending on the location.
+            Please contact us for more details about transportation options.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT / LEAD FORM -->
+    <section class="contact-section" id="contact">
+      <div class="contact-left">
+        <div class="contact-image-wrapper">
+          <img 
+            src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600&h=400&fit=crop" 
+            alt="Happy children at Rockridge Global Preschool" 
+            loading="lazy"
+          />
+        </div>
+        <div>
+          <p class="contact-tagline">Ready to see if Rockridge Global Preschool is right for your child?</p>
+          <p class="contact-text">
+            Share your details and we'll call you within one working day to
+            schedule a campus tour, explain our programs and answer your
+            questions.
+          </p>
+          <p class="contact-meta">
+            <strong>Call / WhatsApp us:</strong><br />
+            <strong style="color: var(--primary-dark);">Bachupally:</strong> <a href="tel:08367677799" style="color: var(--primary); text-decoration: none;">083676 77799</a><br />
+            <strong style="color: var(--primary-dark);">Manikonda:</strong> <a href="tel:07337477799" style="color: var(--primary); text-decoration: none;">073374 77799</a>
+          </p>
+        </div>
+      </div>
+
+      <form>
+        <div class="form-grid">
+          <div class="form-row">
+            <label for="parentName">Parent's Name</label>
+            <input type="text" id="parentName" name="parentName" placeholder="Your full name" />
+          </div>
+          <div class="form-row">
+            <label for="phone">Mobile Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="+91..." />
+          </div>
+          <div class="form-row">
+            <label for="preferredBranch">Preferred Branch</label>
+            <select id="preferredBranch" name="preferredBranch">
+              <option value="">Select branch</option>
+              <option>Bachupally Branch</option>
+              <option>Manikonda Branch</option>
+              <option>Either branch</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="childAge">Child's Age</label>
+            <select id="childAge" name="childAge">
+              <option value="">Select age</option>
+              <option>2 years</option>
+              <option>3 years</option>
+              <option>4 years</option>
+              <option>5 years</option>
+            </select>
+          </div>
+          <div class="form-row full-width">
+            <label for="preferredTime">Preferred time to contact</label>
+            <select id="preferredTime" name="preferredTime">
+              <option value="">Any time</option>
+              <option>Morning (9 AM – 12 PM)</option>
+              <option>Afternoon (12 PM – 4 PM)</option>
+              <option>Evening (4 PM – 7 PM)</option>
+            </select>
+          </div>
+          <div class="form-row full-width">
+            <label for="message">Any questions or details to share?</label>
+            <textarea id="message" name="message" placeholder="Tell us about your child or what you're looking for..."></textarea>
+          </div>
+          <div class="form-row full-width">
+            <button type="submit" class="btn-primary" style="width:100%; padding: 10px;">
+              Enquire Now – Schedule My Tour
+            </button>
+          </div>
+        </div>
+        <p class="form-footnote">
+          By submitting this form you agree to be contacted by Rockridge Global Preschool
+          via phone or WhatsApp for admission-related information.
+        </p>
+      </form>
+    </section>
+
+    <!-- LOCATIONS SECTION WITH MAPS -->
+    <section id="locations">
+      <div class="section-header">
+        <div>
+          <div class="section-kicker">Our Locations</div>
+          <h2 class="section-title">Two Convenient Branches</h2>
+        </div>
+        <p class="section-sub">
+          Choose the location that's most convenient for your family. Both branches offer the same high-quality programs and care.
+        </p>
+      </div>
+
+      <div class="locations-grid">
+        <div class="location-card">
+          <div class="location-name">Bachupally Branch</div>
+          <p class="location-address">
+            PLOT NO 855/A, Lahari Green Park Rd<br />
+            opp. Gothik Pangea, Bowrampet<br />
+            Bachupally, Hyderabad<br />
+            Telangana 500118
+          </p>
+          <div class="location-phone">
+            <strong>Phone:</strong> <a href="tel:08367677799" style="color: var(--primary); text-decoration: none; font-weight: 600;">083676 77799</a>
+          </div>
+          <div class="location-map">
+            <iframe 
+              src="https://www.google.com/maps?q=PLOT+NO+855%2FA%2C+Lahari+Green+Park+Rd%2C+opp.+Gothik+Pangea%2C+Bowrampet%2C+Bachupally%2C+Hyderabad%2C+Telangana+500118&output=embed" 
+              width="100%" 
+              height="250" 
+              style="border:0; border-radius: 12px;" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Bachupally Branch Location"
+            ></iframe>
+          </div>
+          <a 
+            href="https://maps.app.goo.gl/QKoMmyKX8RVaEqgj6" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="location-link"
+          >
+            Open in Google Maps
+          </a>
+        </div>
+
+        <div class="location-card">
+          <div class="location-name">Manikonda Branch</div>
+          <p class="location-address">
+            Plot No: #4-13/29/3, Tanasha Nagar Huda colony<br />
+            Near Baptist Church, opp. Apmas<br />
+            Dream Valley Rd, Manikonda<br />
+            Telangana 500089
+          </p>
+          <div class="location-phone">
+            <strong>Phone:</strong> <a href="tel:07337477799" style="color: var(--primary); text-decoration: none; font-weight: 600;">073374 77799</a>
+          </div>
+          <div class="location-map">
+            <iframe 
+              src="https://www.google.com/maps?q=Plot+No%3A+%234-13%2F29%2F3%2C+Tanasha+Nagar+Huda+colony%2C+Near+Baptist+Church%2C+opp.+Apmas%2C+Dream+Valley+Rd%2C+Manikonda%2C+Telangana+500089&output=embed" 
+              width="100%" 
+              height="250" 
+              style="border:0; border-radius: 12px;" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Manikonda Branch Location"
+            ></iframe>
+          </div>
+          <a 
+            href="https://maps.app.goo.gl/z8sHDW83VfzmZwxRA" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="location-link"
+          >
+            Open in Google Maps
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <span>© Rockridge Global Preschool · All rights reserved.</span>
+      <span>
+        <span>📸</span> Follow us on Instagram &amp; Facebook
+      </span>
+    </footer>
+  </div>
+
+  <script>
+    // Smooth scroll animations on scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    // Observe all sections
+    document.querySelectorAll('section').forEach(section => {
+      section.classList.add('fade-in');
+      observer.observe(section);
+    });
+
+    // Add parallax effect to hero image
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const heroImage = document.querySelector('.hero-main-image');
+      const nav = document.querySelector('.topnav');
+      
+      if (heroImage && scrolled < 500) {
+        heroImage.style.transform = `translateY(${scrolled * 0.2}px)`;
+      }
+      
+      if (nav) {
+        if (scrolled > 50) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      }
+    });
+  </script>
+</body>
+</html>
