@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Rockridge Global Preschool – Bachupally & Manikonda Branches</title>
+  <title>Rockridge Global Preschool – Bachupally Branch</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     :root {
@@ -137,7 +137,7 @@
     }
 
     .hero-left h1 {
-      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-size: clamp(2.2rem, 5vw, 2.7rem);
       line-height: 1.1;
       margin-bottom: 20px;
       color: var(--white);
@@ -548,6 +548,10 @@
     }
 
     .gallery-item img {
+      cursor: pointer;
+    }
+
+    .gallery-item img {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -577,6 +581,159 @@
 
     .gallery-item:hover::after {
       opacity: 1;
+    }
+
+    /* GALLERY LIGHTBOX / MODAL */
+    .gallery-lightbox {
+      display: flex;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 10000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      pointer-events: none;
+    }
+
+    .gallery-lightbox.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .lightbox-content {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 80px;
+    }
+
+    .lightbox-image-wrapper {
+      position: relative;
+      max-width: 90%;
+      max-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox-image {
+      max-width: 100%;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-size: 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-main);
+      transition: all 0.3s ease;
+      z-index: 10001;
+      font-weight: 300;
+    }
+
+    .lightbox-close:hover {
+      background: var(--white);
+      transform: scale(1.1);
+    }
+
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      font-size: 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-main);
+      transition: all 0.3s ease;
+      z-index: 10001;
+    }
+
+    .lightbox-nav:hover {
+      background: var(--white);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .lightbox-nav.prev {
+      left: 30px;
+    }
+
+    .lightbox-nav.next {
+      right: 30px;
+    }
+
+    .lightbox-counter {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: var(--white);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      z-index: 10001;
+    }
+
+    @media (max-width: 768px) {
+      .lightbox-content {
+        padding: 40px 20px;
+      }
+
+      .lightbox-close {
+        top: 10px;
+        right: 15px;
+        width: 36px;
+        height: 36px;
+        font-size: 20px;
+      }
+
+      .lightbox-nav {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+      }
+
+      .lightbox-nav.prev {
+        left: 10px;
+      }
+
+      .lightbox-nav.next {
+        right: 10px;
+      }
+
+      .lightbox-counter {
+        bottom: 15px;
+        font-size: 0.8rem;
+        padding: 6px 12px;
+      }
     }
 
     /* TESTIMONIALS */
@@ -657,7 +814,7 @@
     /* LOCATIONS SECTION */
     .locations-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: minmax(0, 1fr);
       gap: 24px;
       margin-top: 32px;
     }
@@ -670,6 +827,10 @@
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+      gap: 32px;
+      align-items: start;
     }
 
     .location-card::before {
@@ -712,20 +873,29 @@
     .location-phone {
       font-size: 0.9rem;
       color: var(--text-main);
-      margin-bottom: 16px;
+      margin-bottom: 20px;
       padding: 8px 0;
     }
 
+    .location-info {
+      display: flex;
+      flex-direction: column;
+    }
+
     .location-map {
-      margin-bottom: 16px;
       border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 4px 12px rgba(15, 23, 42, 0.1);
+      height: 100%;
+      min-height: 400px;
+      position: sticky;
+      top: 100px;
     }
 
     .location-map iframe {
       width: 100%;
-      height: 250px;
+      height: 100%;
+      min-height: 400px;
       border: none;
       display: block;
     }
@@ -1160,10 +1330,19 @@
 
       .location-card {
         padding: 20px;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
+      }
+
+      .location-map {
+        min-height: 300px;
+        position: relative;
+        top: 0;
       }
 
       .location-map iframe {
-        height: 200px;
+        min-height: 300px;
+        height: 300px;
       }
 
       .section-title {
@@ -1336,29 +1515,38 @@
       <div class="hero-content">
         <div class="hero-left">
           <h1>
+            Bachupally's Premier Preschool<br />
             Where Every Child <span>Blossoms</span>
           </h1>
           <p class="hero-subtitle">
-            Trusted Preschool in Bachupally & Manikonda | Nurturing Young Minds<br />
-            A nurturing preschool environment that combines play-based learning with 
-            emotional security, helping your child grow confident, curious, and ready for the world.
+            Trusted Preschool in <strong style="color: var(--accent); font-size: 1.1em;">Bachupally</strong> | Nurturing Young Minds<br />
+            A caring preschool environment in Bachupally that blends play-based learning with 
+            emotional security, helping your child grow confident, curious, and ready for school.
           </p>
           <div class="hero-badges">
-            <span class="badge">
+            <span class="badge" style="background: rgba(251, 191, 36, 0.3); border-color: var(--accent);">
               <span class="badge-dot"></span>
-              Ages 2-5
+              📍 Located in Bachupally
             </span>
             <span class="badge">
               <span class="badge-dot"></span>
-              Play-Based Learning
+              🎨 Play-Based Learning
             </span>
             <span class="badge">
               <span class="badge-dot"></span>
-              Safe & Secure
+              🧒 Ages 2–5 Programs
             </span>
+            <!-- <span class="badge">
+              <span class="badge-dot"></span>
+              🛡️ Safe & Child-Friendly Campus
+            </span> -->
+            <!-- <span class="badge">
+              <span class="badge-dot"></span>
+              👩‍🏫 Experienced Educators
+            </span> -->
           </div>
           <p class="hero-note">
-            ✓ Low child-teacher ratio · ✓ Qualified educators · ✓ Bright, hygienic spaces
+            ✓ Located in Bachupally · ✓ Play-Based Learning · ✓ Ages 2–5 Programs · ✓ Safe & Child-Friendly Campus · ✓ Experienced Educators
           </p>
         </div>
         <div class="hero-right">
@@ -1425,108 +1613,108 @@
   <div class="page" style="padding-top: 40px;">
     <!-- WHY US -->
     <section id="why">
-      <div class="section-header">
-        <div>
-          <div class="section-kicker">Why parents choose us</div>
-          <h2 class="section-title">A preschool built around your child’s needs</h2>
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Why parents choose us</div>
+            <h2 class="section-title">A preschool built around your child’s needs</h2>
+          </div>
+          <p class="section-sub">
+            We combine early-years education best practices with a warm,
+            family-like atmosphere.
+          </p>
         </div>
-        <p class="section-sub">
-          We combine early-years education best practices with a warm,
-          family-like atmosphere.
-        </p>
-      </div>
-
-      <div class="features-grid">
-        <article class="feature-card">
-          <img 
-            src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=400&h=300&fit=crop" 
-            alt="Secure preschool entrance with safety measures" 
-            class="feature-image"
-            loading="lazy"
-          />
-          <div class="feature-icon">🔒</div>
-          <h3 class="feature-title">Safe & secure environment</h3>
-          <p class="feature-body">
-            CCTV-enabled campus, secure entry/exit and trained staff so you feel
-            confident leaving your little one with us.
-          </p>
-        </article>
-
-        <article class="feature-card">
-          <img 
-            src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=300&fit=crop" 
-            alt="Qualified teacher engaging with children" 
-            class="feature-image"
-            loading="lazy"
-          />
-          <div class="feature-icon">👩‍🏫</div>
-          <h3 class="feature-title">Qualified, caring teachers</h3>
-          <p class="feature-body">
-            Experienced early-years educators focused on emotional security and
-            age-appropriate learning.
-          </p>
-        </article>
-
-        <article class="feature-card">
-          <img 
-            src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=400&h=300&fit=crop" 
-            alt="Children playing and learning through activities" 
-            class="feature-image"
-            loading="lazy"
-          />
-          <div class="feature-icon">🧸</div>
-          <h3 class="feature-title">Play-based learning</h3>
-          <p class="feature-body">
-            Hands-on activities, stories, music and movement ensure children
-            learn through curiosity and fun.
-          </p>
-        </article>
-
-        <article class="feature-card">
-          <img 
-            src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=400&h=300&fit=crop" 
-            alt="Bright and colorful preschool classroom" 
-            class="feature-image"
-            loading="lazy"
-          />
-          <div class="feature-icon">🏡</div>
-          <h3 class="feature-title">Bright, hygienic spaces</h3>
-          <p class="feature-body">
-            Clean, colourful classrooms and child-safe furniture designed for
-            comfort, hygiene and exploration.
-          </p>
-        </article>
-
-        <article class="feature-card">
-          <img 
-            src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&h=300&fit=crop" 
-            alt="Small group learning with personal attention" 
-            class="feature-image"
-            loading="lazy"
-          />
-          <div class="feature-icon">👫</div>
-          <h3 class="feature-title">Low child-teacher ratio</h3>
-          <p class="feature-body">
-            Small groups ensure every child gets personal attention, support
-            and encouragement.
-          </p>
-        </article>
-
-        <article class="feature-card">
-          <img 
-            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop" 
-            alt="Preschool building with convenient location" 
-            class="feature-image"
-            loading="lazy"
-          />
-          <div class="feature-icon">📍</div>
-          <h3 class="feature-title">Convenient location</h3>
-          <p class="feature-body">
-            Easily accessible location with nearby parking and safe pick-up /
-            drop-off zones.
-          </p>
-        </article>
-      </div>
+  
+        <div class="features-grid">
+          <article class="feature-card">
+            <img 
+              src="/assets/Images/safe-secure.JPG" 
+              alt="Secure preschool entrance with safety measures" 
+              class="feature-image"
+              loading="lazy"
+            />
+            <!-- <div class="feature-icon">🔒</div> -->
+            <h3 class="feature-title">Safe & secure environment</h3>
+            <p class="feature-body">
+              CCTV-enabled campus, secure entry/exit and trained staff so you feel
+              confident leaving your little one with us.
+            </p>
+          </article>
+  
+          <article class="feature-card">
+            <img 
+              src="/assets/Images/qualified-teachers.png" 
+              alt="Qualified teacher engaging with children" 
+              class="feature-image"
+              loading="lazy"
+            />
+            <!-- <div class="feature-icon">👩‍🏫</div> -->
+            <h3 class="feature-title">Qualified, caring teachers</h3>
+            <p class="feature-body">
+              Experienced early-years educators focused on emotional security and
+              age-appropriate learning.
+            </p>
+          </article>
+  
+          <article class="feature-card">
+            <img 
+              src="/assets/Images/play-based-learning.png" 
+              alt="Children playing and learning through activities" 
+              class="feature-image"
+              loading="lazy"
+            />
+            <!-- <div class="feature-icon">🧸</div> -->
+            <h3 class="feature-title">Play-based learning</h3>
+            <p class="feature-body">
+              Hands-on activities, stories, music and movement ensure children
+              learn through curiosity and fun.
+            </p>
+          </article>
+  
+          <article class="feature-card">
+            <img 
+              src="/assets/Images/bright-hygienic-spaces.JPG" 
+              alt="Bright and colorful preschool classroom" 
+              class="feature-image"
+              loading="lazy"
+            />
+            <!-- <div class="feature-icon">🏡</div> -->
+            <h3 class="feature-title">Bright, hygienic spaces</h3>
+            <p class="feature-body">
+              Clean, colourful classrooms and child-safe furniture designed for
+              comfort, hygiene and exploration.
+            </p>
+          </article>
+  
+          <article class="feature-card">
+            <img 
+              src="/assets/Images/low-child-teacher.JPG" 
+              alt="Small group learning with personal attention" 
+              class="feature-image"
+              loading="lazy"
+            />
+            <!-- <div class="feature-icon">👫</div> -->
+            <h3 class="feature-title">Low child-teacher ratio</h3>
+            <p class="feature-body">
+              Small groups ensure every child gets personal attention, support
+              and encouragement.
+            </p>
+          </article>
+  
+          <article class="feature-card">
+            <img 
+              src="/assets/Images/convenient-locations.png" 
+              alt="Preschool building with convenient location" 
+              class="feature-image"
+              loading="lazy"
+            />
+            <!-- <div class="feature-icon">📍</div> -->
+            <h3 class="feature-title">Convenient location</h3>
+            <p class="feature-body">
+              Easily accessible location with nearby parking and safe pick-up /
+              drop-off zones.
+            </p>
+          </article>
+        </div>
     </section>
 
     <!-- GALLERY SECTION -->
@@ -1544,48 +1732,63 @@
       <div class="gallery-grid">
         <div class="gallery-item">
           <img 
-            src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=400&h=300&fit=crop" 
+            src="/assets/Images/bachupally/11.jpg" 
             alt="Colorful preschool classroom with learning materials" 
             loading="lazy"
           />
         </div>
         <div class="gallery-item">
           <img 
-            src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=400&h=300&fit=crop" 
+            src="/assets/Images/bachupally/1.jpg" 
             alt="Children playing in outdoor play area" 
             loading="lazy"
           />
         </div>
         <div class="gallery-item">
           <img 
-            src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&h=300&fit=crop" 
+            src="/assets/Images/bachupally/3.jpg" 
             alt="Children engaged in art and craft activities" 
             loading="lazy"
           />
         </div>
         <div class="gallery-item">
           <img 
-            src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=300&fit=crop" 
+            src="/assets/Images/bachupally/7.jpg" 
             alt="Teacher reading story to children" 
             loading="lazy"
           />
         </div>
         <div class="gallery-item">
           <img 
-            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop" 
+            src="/assets/Images/bachupally/6.jpg" 
             alt="Preschool library corner with books" 
             loading="lazy"
           />
         </div>
         <div class="gallery-item">
           <img 
-            src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=400&h=300&fit=crop" 
+            src="/assets/Images/bachupally/9.jpg" 
             alt="Children having snack time together" 
             loading="lazy"
           />
         </div>
       </div>
     </section>
+
+    <!-- GALLERY LIGHTBOX MODAL -->
+    <div class="gallery-lightbox" id="galleryLightbox">
+      <button class="lightbox-close" aria-label="Close gallery">×</button>
+      <button class="lightbox-nav prev" aria-label="Previous image">‹</button>
+      <button class="lightbox-nav next" aria-label="Next image">›</button>
+      <div class="lightbox-content">
+        <div class="lightbox-image-wrapper">
+          <img class="lightbox-image" id="lightboxImage" src="" alt="" />
+        </div>
+      </div>
+      <div class="lightbox-counter">
+        <span id="lightboxCounter">1 / 6</span>
+      </div>
+    </div>
 
     <!-- PROGRAM & DAY SCHEDULE -->
     <section id="programs">
@@ -1775,11 +1978,12 @@
     <!-- CONTACT / LEAD FORM -->
     <section class="contact-section" id="contact">
       <div class="contact-left">
-        <div class="contact-image-wrapper">
+        <div class="contact-image-wrapper" style="width: 100%; height: 300px;">
           <img 
-            src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600&h=400&fit=crop" 
+            src="/assets/Images/bachupally/11.jpg" 
             alt="Happy children at Rockridge Global Preschool" 
             loading="lazy"
+            style="width: 100%; height: 100%; object-fit: cover;"
           />
         </div>
         <div>
@@ -1791,8 +1995,8 @@
           </p>
           <p class="contact-meta">
             <strong>Call / WhatsApp us:</strong><br />
-            <strong style="color: var(--primary-dark);">Bachupally:</strong> <a href="tel:08367677799" style="color: var(--primary); text-decoration: none;">083676 77799</a><br />
-            <strong style="color: var(--primary-dark);">Manikonda:</strong> <a href="tel:07337477799" style="color: var(--primary); text-decoration: none;">073374 77799</a>
+            <strong style="color: var(--primary-dark);">Bachupally Branch:</strong> <a href="tel:08367677799" style="color: var(--primary); text-decoration: none;">083676 77799</a><br />
+            <strong style="color: var(--primary-dark);">Manikonda Branch:</strong> <a href="tel:07337477799" style="color: var(--primary); text-decoration: none;">073374 77799</a>
           </p>
         </div>
       </div>
@@ -1857,78 +2061,48 @@
       <div class="section-header">
         <div>
           <div class="section-kicker">Our Locations</div>
-          <h2 class="section-title">Two Convenient Branches</h2>
+          <h2 class="section-title">Visit Our Bachupally Branch</h2>
         </div>
         <p class="section-sub">
-          Choose the location that's most convenient for your family. Both branches offer the same high-quality programs and care.
+          Conveniently located in Bachupally with easy access and safe pick-up/drop-off zones.
         </p>
       </div>
 
       <div class="locations-grid">
         <div class="location-card">
-          <div class="location-name">Bachupally Branch</div>
-          <p class="location-address">
-            PLOT NO 855/A, Lahari Green Park Rd<br />
-            opp. Gothik Pangea, Bowrampet<br />
-            Bachupally, Hyderabad<br />
-            Telangana 500118
-          </p>
-          <div class="location-phone">
-            <strong>Phone:</strong> <a href="tel:08367677799" style="color: var(--primary); text-decoration: none; font-weight: 600;">083676 77799</a>
+          <div class="location-info">
+            <div class="location-name">Bachupally Branch</div>
+            <p class="location-address">
+              PLOT NO 855/A, Lahari Green Park Rd<br />
+              opp. Gothik Pangea, Bowrampet<br />
+              Bachupally, Hyderabad<br />
+              Telangana 500118
+            </p>
+            <div class="location-phone">
+              <strong>Phone:</strong> <a href="tel:08367677799" style="color: var(--primary); text-decoration: none; font-weight: 600;">083676 77799</a>
+            </div>
+            <a 
+              href="https://maps.app.goo.gl/QKoMmyKX8RVaEqgj6" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="location-link"
+              style="margin-top: auto;"
+            >
+              Open in Google Maps
+            </a>
           </div>
           <div class="location-map">
             <iframe 
               src="https://www.google.com/maps?q=PLOT+NO+855%2FA%2C+Lahari+Green+Park+Rd%2C+opp.+Gothik+Pangea%2C+Bowrampet%2C+Bachupally%2C+Hyderabad%2C+Telangana+500118&output=embed" 
               width="100%" 
-              height="250" 
-              style="border:0; border-radius: 12px;" 
+              height="100%" 
+              style="border:0;" 
               allowfullscreen="" 
               loading="lazy" 
               referrerpolicy="no-referrer-when-downgrade"
               title="Bachupally Branch Location"
             ></iframe>
           </div>
-          <a 
-            href="https://maps.app.goo.gl/QKoMmyKX8RVaEqgj6" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            class="location-link"
-          >
-            Open in Google Maps
-          </a>
-        </div>
-
-        <div class="location-card">
-          <div class="location-name">Manikonda Branch</div>
-          <p class="location-address">
-            Plot No: #4-13/29/3, Tanasha Nagar Huda colony<br />
-            Near Baptist Church, opp. Apmas<br />
-            Dream Valley Rd, Manikonda<br />
-            Telangana 500089
-          </p>
-          <div class="location-phone">
-            <strong>Phone:</strong> <a href="tel:07337477799" style="color: var(--primary); text-decoration: none; font-weight: 600;">073374 77799</a>
-          </div>
-          <div class="location-map">
-            <iframe 
-              src="https://www.google.com/maps?q=Plot+No%3A+%234-13%2F29%2F3%2C+Tanasha+Nagar+Huda+colony%2C+Near+Baptist+Church%2C+opp.+Apmas%2C+Dream+Valley+Rd%2C+Manikonda%2C+Telangana+500089&output=embed" 
-              width="100%" 
-              height="250" 
-              style="border:0; border-radius: 12px;" 
-              allowfullscreen="" 
-              loading="lazy" 
-              referrerpolicy="no-referrer-when-downgrade"
-              title="Manikonda Branch Location"
-            ></iframe>
-          </div>
-          <a 
-            href="https://maps.app.goo.gl/z8sHDW83VfzmZwxRA" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            class="location-link"
-          >
-            Open in Google Maps
-          </a>
         </div>
       </div>
     </section>
@@ -1942,45 +2116,7 @@
     </footer>
   </div>
 
-  <script>
-    // Smooth scroll animations on scroll
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
+  <script src="/assets/js/script.js"></script>
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, observerOptions);
-
-    // Observe all sections
-    document.querySelectorAll('section').forEach(section => {
-      section.classList.add('fade-in');
-      observer.observe(section);
-    });
-
-    // Add parallax effect to hero image
-    window.addEventListener('scroll', () => {
-      const scrolled = window.pageYOffset;
-      const heroImage = document.querySelector('.hero-main-image');
-      const nav = document.querySelector('.topnav');
-      
-      if (heroImage && scrolled < 500) {
-        heroImage.style.transform = `translateY(${scrolled * 0.2}px)`;
-      }
-      
-      if (nav) {
-        if (scrolled > 50) {
-          nav.classList.add('scrolled');
-        } else {
-          nav.classList.remove('scrolled');
-        }
-      }
-    });
-  </script>
 </body>
 </html>
