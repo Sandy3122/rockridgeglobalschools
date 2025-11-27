@@ -71,6 +71,16 @@
         z-index: 1;
     }
 
+    /* Manikonda Page - Light Blue-Purple Gradient */
+    .manikonda-page .hero::before {
+        background: linear-gradient(135deg, rgba(147, 197, 253, 0.65) 0%, rgba(196, 181, 253, 0.60) 40%, rgba(221, 214, 254, 0.55) 70%, rgba(254, 243, 199, 0.25) 100%);
+    }
+
+    /* Bachupally Page - Light Orange-Pink Gradient */
+    .bachupally-page .hero::before {
+        background: linear-gradient(135deg, rgba(253, 186, 116, 0.65) 0%, rgba(252, 165, 165, 0.60) 40%, rgba(251, 207, 232, 0.55) 70%, rgba(254, 243, 199, 0.25) 100%);
+    }
+
     .hero-background {
         position: absolute;
         top: 0;
@@ -951,6 +961,16 @@
         overflow: hidden;
     }
 
+    /* Manikonda Page - Contact Section Gradient */
+    .manikonda-page .contact-section {
+        background: linear-gradient(120deg, #eff6ff, #f3e8ff, #e0e7ff);
+    }
+
+    /* Bachupally Page - Contact Section Gradient */
+    .bachupally-page .contact-section {
+        background: linear-gradient(120deg, #fff7ed, #fef2f2, #fef3c7);
+    }
+
     .contact-section::before {
         content: '';
         position: absolute;
@@ -961,6 +981,16 @@
         background: radial-gradient(circle, rgba(251, 191, 36, 0.2) 0%, transparent 70%);
         border-radius: 50%;
         animation: pulse 6s ease-in-out infinite;
+    }
+
+    /* Manikonda Page - Contact Section Radial Gradient */
+    .manikonda-page .contact-section::before {
+        background: radial-gradient(circle, rgba(147, 197, 253, 0.20) 0%, rgba(196, 181, 253, 0.12) 50%, transparent 70%);
+    }
+
+    /* Bachupally Page - Contact Section Radial Gradient */
+    .bachupally-page .contact-section::before {
+        background: radial-gradient(circle, rgba(253, 186, 116, 0.20) 0%, rgba(252, 165, 165, 0.12) 50%, transparent 70%);
     }
 
     .contact-left {
