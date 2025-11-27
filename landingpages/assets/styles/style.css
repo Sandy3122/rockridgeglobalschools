@@ -71,14 +71,26 @@
         z-index: 1;
     }
 
-    /* Manikonda Page - Light Blue-Purple Gradient */
-    .manikonda-page .hero::before {
-        background: linear-gradient(135deg, rgba(147, 197, 253, 0.65) 0%, rgba(196, 181, 253, 0.60) 40%, rgba(221, 214, 254, 0.55) 70%, rgba(254, 243, 199, 0.25) 100%);
+    /* Dark base overlay for better text visibility */
+    .hero::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.25);
+        z-index: 1;
     }
 
-    /* Bachupally Page - Light Orange-Pink Gradient */
+    /* Manikonda Page - Light Blue-Purple Gradient with Darker Overlay for Text Visibility */
+    .manikonda-page .hero::before {
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.75) 0%, rgba(59, 130, 246, 0.70) 40%, rgba(139, 92, 246, 0.65) 70%, rgba(251, 191, 36, 0.40) 100%);
+    }
+
+    /* Bachupally Page - Warm Coral-Peach Gradient with Darker Overlay for Text Visibility */
     .bachupally-page .hero::before {
-        background: linear-gradient(135deg, rgba(253, 186, 116, 0.65) 0%, rgba(252, 165, 165, 0.60) 40%, rgba(251, 207, 232, 0.55) 70%, rgba(254, 243, 199, 0.25) 100%);
+        background: linear-gradient(135deg, rgba(251, 113, 133, 0.75) 0%, rgba(253, 164, 175, 0.70) 40%, rgba(254, 202, 202, 0.65) 70%, rgba(251, 191, 36, 0.40) 100%);
     }
 
     .hero-background {
@@ -122,22 +134,22 @@
         ;
         backdrop-filter: blur(10px);
         border-radius: 20px;
-        padding: 24px;
+        padding: 18px;
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         max-width: 100%;
     }
 
     .hero-form h3 {
-        font-size: 1.3rem;
+        font-size: 1.1rem;
         font-weight: 700;
         color: var(--primary-dark);
-        margin-bottom: 8px;
+        margin-bottom: 6px;
     }
 
     .hero-form p {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         color: var(--text-muted);
-        margin-bottom: 20px;
+        margin-bottom: 16px;
     }
 
     .hero-left h1 {
@@ -146,7 +158,7 @@
         margin-bottom: 20px;
         color: var(--white);
         font-weight: 800;
-        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5), 0 4px 30px rgba(0, 0, 0, 0.3);
     }
 
     .hero-left h1 span {
@@ -160,7 +172,7 @@
         margin-bottom: 24px;
         max-width: 580px;
         line-height: 1.6;
-        text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+        text-shadow: 0 2px 15px rgba(0, 0, 0, 0.5), 0 1px 5px rgba(0, 0, 0, 0.3);
     }
 
     .hero-badges {
@@ -246,8 +258,8 @@
 
     .hero-note {
         font-size: 0.9rem;
-        color: rgba(255, 255, 255, 0.9);
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        color: rgba(255, 255, 255, 0.95);
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
     }
 
     .hero-right {
@@ -968,7 +980,7 @@
 
     /* Bachupally Page - Contact Section Gradient */
     .bachupally-page .contact-section {
-        background: linear-gradient(120deg, #fff7ed, #fef2f2, #fef3c7);
+        background: linear-gradient(120deg, #fef2f2, #fce7f3, #fef3c7);
     }
 
     .contact-section::before {
@@ -990,7 +1002,7 @@
 
     /* Bachupally Page - Contact Section Radial Gradient */
     .bachupally-page .contact-section::before {
-        background: radial-gradient(circle, rgba(253, 186, 116, 0.20) 0%, rgba(252, 165, 165, 0.12) 50%, transparent 70%);
+        background: radial-gradient(circle, rgba(251, 113, 133, 0.20) 0%, rgba(253, 164, 175, 0.12) 50%, transparent 70%);
     }
 
     .contact-left {
@@ -1050,11 +1062,11 @@
     .form-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 10px;
+        gap: 8px;
     }
 
     .form-row {
-        margin-bottom: 10px;
+        margin-bottom: 8px;
     }
 
     .form-row.full-width {
@@ -1063,7 +1075,7 @@
 
     label {
         display: block;
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         margin-bottom: 2px;
         color: var(--text-muted);
         font-weight: 500;
@@ -1073,10 +1085,10 @@
     select,
     textarea {
         width: 100%;
-        padding: 6px 8px;
+        padding: 5px 8px;
         border-radius: 8px;
         border: 1px solid rgba(148, 163, 184, 0.8);
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         font-family: inherit;
         outline: none;
         background: rgb(255 255 255 / 10%);
@@ -1091,11 +1103,11 @@
 
     textarea {
         resize: vertical;
-        min-height: 60px;
+        min-height: 50px;
     }
 
     .form-footnote {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         color: var(--text-muted);
         margin-top: 6px;
     }
