@@ -492,3 +492,194 @@ function formatWhatsAppMessage(data, branchDetails) {
       contactForm.addEventListener('submit', handleFormSubmit(contactForm, 'Contact Form'));
     }
   });
+
+  // Testimonials Carousel
+  document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.getElementById('testimonialsCarousel');
+    const prevBtn = document.getElementById('testimonialPrev');
+    const nextBtn = document.getElementById('testimonialNext');
+    const dotsContainer = document.getElementById('testimonialsDots');
+
+    if (!carousel || !prevBtn || !nextBtn || !dotsContainer) {
+      return;
+    }
+
+    const cards = carousel.querySelectorAll('.testimonial-card');
+    const totalCards = cards.length;
+    let currentSlideIndex = 0;
+    let autoplayInterval = null;
+
+    // Get cards per view based on screen size
+    function getCardsPerView() {
+      return window.innerWidth <= 840 ? 1 : 2;
+    }
+
+    // Calculate total slides (pairs of cards)
+    function getTotalSlides() {
+      const cardsPerView = getCardsPerView();
+      return Math.ceil(totalCards / cardsPerView);
+    }
+
+    // Create dots based on slides, not individual cards
+    function createDots() {
+      dotsContainer.innerHTML = '';
+      const totalSlides = getTotalSlides();
+      for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('button');
+        dot.className = 'testimonial-dot';
+        if (i === 0) dot.classList.add('active');
+        dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+        dot.addEventListener('click', () => goToSlide(i));
+        dotsContainer.appendChild(dot);
+      }
+    }
+
+    // Update dots
+    function updateDots() {
+      const dots = dotsContainer.querySelectorAll('.testimonial-dot');
+      dots.forEach((dot, index) => {
+        if (index === currentSlideIndex) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+    }
+
+    // Go to specific slide
+    function goToSlide(slideIndex) {
+      const cardsPerView = getCardsPerView();
+      const totalSlides = getTotalSlides();
+      currentSlideIndex = Math.max(0, Math.min(slideIndex, totalSlides - 1));
+      
+      // Calculate scroll position based on card width
+      if (cards.length > 0) {
+        // Use getBoundingClientRect for more accurate width calculation
+        const cardRect = cards[0].getBoundingClientRect();
+        const carouselRect = carousel.getBoundingClientRect();
+        const cardWidth = cardRect.width;
+        const gap = 20;
+        const scrollPosition = currentSlideIndex * (cardWidth + gap) * cardsPerView;
+        
+        carousel.scrollTo({
+          left: scrollPosition,
+          behavior: 'smooth'
+        });
+      }
+      updateDots();
+      resetAutoplay();
+    }
+
+    // Navigate to previous slide
+    function prevSlide() {
+      const totalSlides = getTotalSlides();
+      currentSlideIndex = (currentSlideIndex - 1 + totalSlides) % totalSlides;
+      goToSlide(currentSlideIndex);
+    }
+
+    // Navigate to next slide
+    function nextSlide() {
+      const totalSlides = getTotalSlides();
+      currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
+      goToSlide(currentSlideIndex);
+    }
+
+    // Start autoplay
+    function startAutoplay() {
+      autoplayInterval = setInterval(() => {
+        nextSlide();
+      }, 5000); // Change slide every 5 seconds
+    }
+
+    // Reset autoplay
+    function resetAutoplay() {
+      if (autoplayInterval) {
+        clearInterval(autoplayInterval);
+      }
+      startAutoplay();
+    }
+
+    // Stop autoplay on user interaction
+    function stopAutoplay() {
+      if (autoplayInterval) {
+        clearInterval(autoplayInterval);
+        autoplayInterval = null;
+      }
+    }
+
+    // Handle scroll events to update current index
+    carousel.addEventListener('scroll', () => {
+      if (cards.length === 0) return;
+      
+      const cardsPerView = getCardsPerView();
+      const cardRect = cards[0].getBoundingClientRect();
+      const cardWidth = cardRect.width;
+      const gap = 20;
+      const scrollLeft = carousel.scrollLeft;
+      const slideWidth = (cardWidth + gap) * cardsPerView;
+      const newSlideIndex = Math.round(scrollLeft / slideWidth);
+      const totalSlides = getTotalSlides();
+      
+      if (newSlideIndex !== currentSlideIndex && newSlideIndex >= 0 && newSlideIndex < totalSlides) {
+        currentSlideIndex = newSlideIndex;
+        updateDots();
+      }
+    });
+
+    // Event listeners
+    prevBtn.addEventListener('click', () => {
+      prevSlide();
+      stopAutoplay();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      nextSlide();
+      stopAutoplay();
+    });
+
+    // Pause autoplay on hover
+    carousel.addEventListener('mouseenter', stopAutoplay);
+    carousel.addEventListener('mouseleave', startAutoplay);
+
+    // Touch/swipe support for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    carousel.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+      stopAutoplay();
+    });
+
+    carousel.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    });
+
+    function handleSwipe() {
+      const swipeThreshold = 50;
+      const diff = touchStartX - touchEndX;
+
+      if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
+      }
+      startAutoplay();
+    }
+
+    // Initialize
+    createDots();
+    startAutoplay();
+
+    // Update on window resize
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        createDots(); // Recreate dots when viewport changes
+        goToSlide(currentSlideIndex);
+      }, 250);
+    });
+  });
