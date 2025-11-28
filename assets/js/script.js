@@ -6,7 +6,7 @@ const WHATSAPP_CONFIG = {
   bachupally: {
     phone: '918367677799',
     display: '083676 77799',
-    address: 'PLOT NO 855/A, Lahari Green Park Rd, opp. Gothik Pangea, Bowrampet, Bachupally, Hyderabad, Telangana 500118'
+    address: 'PLOT NO 855/A, Lahari Green Park Rd, opp. Gothik Pangea, Bowrampet, Bachupally, Hyderabad, Telangana 500090'
   },
   manikonda: {
     phone: '917337477799',
