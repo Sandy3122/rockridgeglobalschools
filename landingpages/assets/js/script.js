@@ -1,58 +1,148 @@
- /**
-  * Email Configuration
-  * 
-  * SETUP INSTRUCTIONS:
-  * 1. Sign up for a free account at https://www.emailjs.com/
-  * 2. Create an Email Service (Gmail, Outlook, etc.) and get your Service ID
-  * 3. Create an Email Template with the following variables:
-  *    - {{to_email}} - Recipient email
-  *    - {{from_name}} - Parent's name
-  *    - {{parent_name}} - Parent's name
-  *    - {{phone}} - Phone number
-  *    - {{preferred_branch}} - Preferred branch (from form selection)
-  *    - {{source_branch}} - Source branch (Bachupally or Manikonda - detected from page)
-  *    - {{child_age}} - Child's age
-  *    - {{preferred_time}} - Preferred contact time
-  *    - {{message}} - Additional message
-  *    - {{form_type}} - Form type (Quick Enquiry or Contact Form)
-  *    - {{page_url}} - Page URL where form was submitted
-  *    - {{timestamp}} - Submission timestamp
-  * 4. Get your Public Key from Account > API Keys
-  * 5. Replace the placeholder values below with your actual credentials
-  */
- const EMAIL_CONFIG = {
-   serviceId: 'YOUR_SERVICE_ID',      // Your EmailJS service ID
-   templateId: 'YOUR_TEMPLATE_ID',    // Your EmailJS template ID
-   publicKey: 'YOUR_PUBLIC_KEY',      // Your EmailJS public key
-   recipientEmail: 'info@rockridgepreschool.com' // Recipient email address
- };
+/**
+ * WhatsApp Configuration
+ * Branch-specific WhatsApp numbers
+ */
+const WHATSAPP_CONFIG = {
+  bachupally: {
+    phone: '918367677799',
+    display: '083676 77799',
+    address: 'PLOT NO 855/A, Lahari Green Park Rd, opp. Gothik Pangea, Bowrampet, Bachupally, Hyderabad, Telangana 500118'
+  },
+  manikonda: {
+    phone: '917337477799',
+    display: '073374 77799',
+    address: 'Plot No: #4-13/29/3, Tanasha Nagar Huda colony, Near Baptist Church, opp. Apmas, Dream Valley Rd, Manikonda, Telangana 500089'
+  }
+};
 
- /**
-  * Detect which branch page the form is submitted from
-  * @returns {string} Branch name (Bachupally, Manikonda, or Unknown)
-  */
- function detectSourceBranch() {
-   const body = document.body;
-   const url = window.location.href.toLowerCase();
-   
-   // Check body class
-   if (body.classList.contains('bachupally-page')) {
-     return 'Bachupally';
-   }
-   if (body.classList.contains('manikonda-page')) {
-     return 'Manikonda';
-   }
-   
-   // Fallback: check URL path
-   if (url.includes('bachupally')) {
-     return 'Bachupally';
-   }
-   if (url.includes('manikonda')) {
-     return 'Manikonda';
-   }
-   
-   return 'Unknown';
- }
+/**
+ * Detect which branch page the form is submitted from
+ * @returns {string} Branch name (Bachupally, Manikonda, or Unknown)
+ */
+function detectSourceBranch() {
+  const body = document.body;
+  const url = window.location.href.toLowerCase();
+  
+  // Check body class
+  if (body.classList.contains('bachupally-page')) {
+    return 'Bachupally';
+  }
+  if (body.classList.contains('manikonda-page')) {
+    return 'Manikonda';
+  }
+  
+  // Fallback: check URL path
+  if (url.includes('bachupally')) {
+    return 'Bachupally';
+  }
+  if (url.includes('manikonda')) {
+    return 'Manikonda';
+  }
+  
+  return 'Unknown';
+}
+
+/**
+ * Get WhatsApp number based on preferred branch or source branch
+ * @param {string} preferredBranch - Preferred branch from form
+ * @param {string} sourceBranch - Source branch (page location)
+ * @returns {string} WhatsApp phone number
+ */
+function getWhatsAppNumber(preferredBranch, sourceBranch) {
+  // If preferred branch is specified, use that
+  if (preferredBranch && preferredBranch.toLowerCase().includes('bachupally')) {
+    return WHATSAPP_CONFIG.bachupally.phone;
+  }
+  if (preferredBranch && preferredBranch.toLowerCase().includes('manikonda')) {
+    return WHATSAPP_CONFIG.manikonda.phone;
+  }
+  
+  // Otherwise, use source branch
+  if (sourceBranch === 'Bachupally') {
+    return WHATSAPP_CONFIG.bachupally.phone;
+  }
+  if (sourceBranch === 'Manikonda') {
+    return WHATSAPP_CONFIG.manikonda.phone;
+  }
+  
+  // Default to Bachupally
+  return WHATSAPP_CONFIG.bachupally.phone;
+}
+
+/**
+ * Get branch details for WhatsApp message
+ * @param {string} preferredBranch - Preferred branch from form
+ * @param {string} sourceBranch - Source branch (page location)
+ * @returns {object} Branch details object
+ */
+function getBranchDetails(preferredBranch, sourceBranch) {
+  // If preferred branch is specified, use that
+  if (preferredBranch && preferredBranch.toLowerCase().includes('bachupally')) {
+    return WHATSAPP_CONFIG.bachupally;
+  }
+  if (preferredBranch && preferredBranch.toLowerCase().includes('manikonda')) {
+    return WHATSAPP_CONFIG.manikonda;
+  }
+  
+  // Otherwise, use source branch
+  if (sourceBranch === 'Bachupally') {
+    return WHATSAPP_CONFIG.bachupally;
+  }
+  if (sourceBranch === 'Manikonda') {
+    return WHATSAPP_CONFIG.manikonda;
+  }
+  
+  // Default to Bachupally
+  return WHATSAPP_CONFIG.bachupally;
+}
+
+/**
+ * Format form data into a neat WhatsApp message
+ * @param {object} data - Form data object
+ * @param {object} branchDetails - Branch details object
+ * @returns {string} Formatted WhatsApp message
+ */
+function formatWhatsAppMessage(data, branchDetails) {
+  const branchName = data.preferredBranch && data.preferredBranch !== 'Either branch' 
+    ? data.preferredBranch 
+    : `${data.sourceBranch} Branch`;
+  
+  // Format phone number - ensure it has +91 prefix
+  let formattedPhone = data.phone.trim();
+  const phoneDigits = formattedPhone.replace(/\D/g, '');
+  if (phoneDigits.length === 10) {
+    formattedPhone = `+91 ${phoneDigits}`;
+  } else if (phoneDigits.length > 10 && !formattedPhone.startsWith('+')) {
+    formattedPhone = `+${phoneDigits}`;
+  }
+  
+  let message = `*New Enquiry - Rockridge Global Preschool*\n\n`;
+  message += `━━━━━━━━━━━━━━━━━━━━\n\n`;
+  message += `*Parent's Name:* ${data.parentName}\n\n`;
+  message += `*Mobile Number:* ${formattedPhone}\n\n`;
+  message += `*Preferred Branch:* ${branchName}\n\n`;
+  
+  if (data.childAge) {
+    message += `*Child's Age:* ${data.childAge}\n\n`;
+  }
+  
+  if (data.preferredTime && data.preferredTime !== 'Any time') {
+    message += `*Preferred Contact Time:* ${data.preferredTime}\n\n`;
+  }
+  
+  if (data.message) {
+    message += `*Message:* ${data.message}\n\n`;
+  }
+  
+  message += `━━━━━━━━━━━━━━━━━━━━\n\n`;
+  message += `*Branch Details:*\n`;
+  message += `${branchName}\n`;
+  message += `Phone: ${branchDetails.display}\n`;
+  message += `Address: ${branchDetails.address}\n\n`;
+  message += `Submitted: ${data.timestamp}`;
+  
+  return message;
+}
 
  // Form submission handler
  function handleFormSubmit(form, formType) {
@@ -88,71 +178,58 @@
      submitButton.disabled = true;
      submitButton.textContent = 'Sending...';
      
-     // Detect source branch (which page the form was submitted from)
-     const sourceBranch = detectSourceBranch();
-     
-     // Collect form data
-     const data = {
-       parentName: parentName.trim(),
-       phone: phone.trim(),
-       preferredBranch: formData.get('preferredBranch') || formData.get('heroPreferredBranch') || '',
-       childAge: formData.get('childAge') || formData.get('heroChildAge') || '',
-       preferredTime: formData.get('preferredTime') || formData.get('heroPreferredTime') || '',
-       message: (formData.get('message') || formData.get('heroMessage') || '').trim(),
-       formType: formType,
-       sourceBranch: sourceBranch,
-       pageUrl: window.location.href,
-       timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
-     };
-     
-     // Prepare email template parameters
-     const templateParams = {
-       to_email: EMAIL_CONFIG.recipientEmail,
-       from_name: data.parentName || 'Anonymous',
-       parent_name: data.parentName,
-       phone: data.phone,
-       preferred_branch: data.preferredBranch || 'Not specified',
-       source_branch: data.sourceBranch,
-       child_age: data.childAge || 'Not specified',
-       preferred_time: data.preferredTime || 'Any time',
-       message: data.message || 'No additional message provided',
-       form_type: formType,
-       page_url: data.pageUrl,
-       timestamp: data.timestamp,
-       subject: `New ${formType} from ${data.sourceBranch} Branch - Rockridge Global Preschool`
-     };
-     
-     try {
-       // Check if EmailJS is properly configured
-       if (EMAIL_CONFIG.serviceId === 'YOUR_SERVICE_ID' || 
-           EMAIL_CONFIG.templateId === 'YOUR_TEMPLATE_ID' || 
-           EMAIL_CONFIG.publicKey === 'YOUR_PUBLIC_KEY') {
-         throw new Error('EmailJS is not configured. Please set up your EmailJS credentials.');
-       }
-       
-       // Send email using EmailJS
-       await emailjs.send(
-         EMAIL_CONFIG.serviceId,
-         EMAIL_CONFIG.templateId,
-         templateParams
-       );
-       
-       // Show success message
-       showFormMessage(form, 'success', 'Thank you! We\'ve received your enquiry and will contact you soon.');
-       
-       // Reset form
-       form.reset();
-       
-     } catch (error) {
-       console.error('Form submission error:', error);
-       
-       // Show error message
-       showFormMessage(form, 'error', 'Sorry, there was an error sending your enquiry. Please call us directly or try again later.');
-     } finally {
-       // Re-enable submit button
-       submitButton.disabled = false;
-       submitButton.textContent = originalButtonText;
-     }
+    // Detect source branch (which page the form was submitted from)
+    const sourceBranch = detectSourceBranch();
+    
+    // Collect form data
+    const data = {
+      parentName: parentName.trim(),
+      phone: phone.trim(),
+      preferredBranch: formData.get('preferredBranch') || formData.get('heroPreferredBranch') || '',
+      childAge: formData.get('childAge') || formData.get('heroChildAge') || '',
+      preferredTime: formData.get('preferredTime') || formData.get('heroPreferredTime') || '',
+      message: (formData.get('message') || formData.get('heroMessage') || '').trim(),
+      formType: formType,
+      sourceBranch: sourceBranch,
+      pageUrl: window.location.href,
+      timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
+    };
+    
+    try {
+      // Get branch details and WhatsApp number
+      const branchDetails = getBranchDetails(data.preferredBranch, data.sourceBranch);
+      const whatsappNumber = getWhatsAppNumber(data.preferredBranch, data.sourceBranch);
+      
+      // Format WhatsApp message
+      const whatsappMessage = formatWhatsAppMessage(data, branchDetails);
+      
+      // Encode message for URL
+      const encodedMessage = encodeURIComponent(whatsappMessage);
+      
+      // Create WhatsApp URL
+      const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+      
+      // Open WhatsApp in a new window/tab
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+      
+      // Show success message
+      showFormMessage(form, 'success', 'Opening WhatsApp... Please send the message to complete your enquiry.');
+      
+      // Reset form after a short delay
+      setTimeout(() => {
+        form.reset();
+      }, 1000);
+      
+    } catch (error) {
+      console.error('Form submission error:', error);
+      
+      // Show error message
+      showFormMessage(form, 'error', 'Sorry, there was an error. Please call us directly or try again later.');
+    } finally {
+      // Re-enable submit button
+      submitButton.disabled = false;
+      submitButton.textContent = originalButtonText;
+    }
    };
  }
  
@@ -403,11 +480,6 @@
 
   // Form Submission Handlers
   document.addEventListener('DOMContentLoaded', function() {
-    // Initialize EmailJS when DOM is ready
-    if (typeof emailjs !== 'undefined' && EMAIL_CONFIG.publicKey !== 'YOUR_PUBLIC_KEY') {
-      emailjs.init(EMAIL_CONFIG.publicKey);
-    }
-    
     // Hero form (Quick Enquiry)
     const heroForm = document.getElementById('heroEnquiryForm');
     if (heroForm) {
