@@ -1315,6 +1315,39 @@
         gap: 4px;
     }
 
+    /* Social Media Icons */
+    .social-media-icons {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .social-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(59, 130, 246, 0.1);
+        color: var(--primary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .social-icon:hover {
+        background: var(--primary);
+        color: var(--white);
+        transform: translateY(-3px);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .social-icon svg {
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
+    }
+
     /* RESPONSIVE */
     @media (max-width: 840px) {
 
@@ -1661,6 +1694,10 @@
             align-items: center;
             text-align: center;
             gap: 8px;
+        }
+
+        .social-media-icons {
+            justify-content: center;
         }
     }
 
