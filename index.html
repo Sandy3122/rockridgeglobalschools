@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Rockridge Global Preschool – Our Locations</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/assets/styles/style.css">
+  <style>
+    .locations-hero {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.9) 0%, rgba(251, 191, 36, 0.8) 100%);
+      padding: 50px 20px 80px;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    section {
+      margin-bottom: 0 !important;
+    }
+
+    .locations-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    .locations-hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .locations-hero h1 {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 800;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .locations-hero p {
+      font-size: clamp(1.1rem, 2vw, 1.3rem);
+      opacity: 0.95;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .locations-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0px 20px 30px 20px;
+    }
+
+    .locations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    .location-card {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .location-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      z-index: 1;
+    }
+
+    .location-card:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.2);
+    }
+
+    .location-card-image {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .location-card:hover .location-card-image {
+      transform: scale(1.08);
+    }
+
+    .location-card-content {
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .location-card-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .location-card-title::before {
+      content: '📍';
+      font-size: 1.5rem;
+    }
+
+    .location-card-description {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 24px;
+      flex: 1;
+    }
+
+    .location-card-details {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .location-detail-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.95rem;
+    }
+
+    .location-detail-icon {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .location-detail-text {
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    .location-detail-text strong {
+      color: var(--primary-dark);
+      font-weight: 600;
+    }
+
+    .location-card-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: auto;
+    }
+
+    .location-btn {
+      flex: 1;
+      min-width: 140px;
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .location-btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: var(--white);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .location-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+    }
+
+    .location-btn-secondary {
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--primary);
+      border: 2px solid rgba(59, 130, 246, 0.2);
+    }
+
+    .location-btn-secondary:hover {
+      background: rgba(59, 130, 246, 0.15);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .section-kicker {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary-dark);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* Main Website Section */
+    .main-website-section {
+      background: linear-gradient(135deg, #f0f9ff 0%, #fef9c3 100%);
+      padding: 80px 20px;
+      /* margin: 60px 0; */
+      margin-bottom: 80px !important;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .main-website-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .main-website-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .main-website-image-wrapper {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.15);
+      transition: transform 0.3s ease;
+    }
+
+    .main-website-image-wrapper:hover {
+      transform: translateY(-8px);
+    }
+
+    .main-website-image-wrapper img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .main-website-text {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .main-website-kicker {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary-dark);
+      font-weight: 600;
+    }
+
+    .main-website-title {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.2;
+    }
+
+    .main-website-description {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .main-website-features {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin: 16px 0;
+    }
+
+    .main-website-feature {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1rem;
+      color: var(--text-main);
+    }
+
+    .main-website-feature-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .main-website-cta {
+      margin-top: 8px;
+    }
+
+    .main-website-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 32px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: var(--white);
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+    }
+
+    .main-website-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 30px rgba(59, 130, 246, 0.4);
+    }
+
+    @media (max-width: 768px) {
+      .main-website-section {
+        padding: 60px 20px;
+        margin: 40px 0;
+      }
+
+      .main-website-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .main-website-title {
+        font-size: 1.8rem;
+      }
+
+      .main-website-description {
+        font-size: 1rem;
+      }
+
+      .main-website-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .locations-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .location-card-content {
+        padding: 24px;
+      }
+
+      .location-card-image {
+        height: 240px;
+      }
+
+      .location-card-title {
+        font-size: 1.5rem;
+      }
+
+      .location-card-actions {
+        flex-direction: column;
+      }
+
+      .location-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- TOP NAVIGATION -->
+  <header class="topnav">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="/assets/Images/ROCKRIDGE-LOGO.png" alt="Rockridge Global Preschool Logo" />
+        <span class="nav-title">Rockridge Global Preschool</span>
+      </div>
+      <nav class="nav-links">
+        <a href="/bachupally/">Bachupally</a>
+        <a href="/manikonda/">Manikonda</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="locations-hero">
+    <div class="locations-hero-content">
+      <h1>Our Locations</h1>
+      <p>Discover our beautiful campuses across Hyderabad, each designed to nurture and inspire young minds</p>
+    </div>
+  </section>
+
+  <!-- MAIN WEBSITE SECTION -->
+  <section class="main-website-section">
+    <div class="main-website-content">
+      <div class="main-website-image-wrapper">
+        <a href="https://rockridgeglobalschool.com/" target="_blank" rel="noopener noreferrer">
+          <img 
+            src="/assets/Images/rockridgeschool.png" 
+            alt="Rockridge Global School - Main Website" 
+            loading="lazy"
+          />
+        </a>
+      </div>
+      <div class="main-website-text">
+        <div class="main-website-kicker">Discover More</div>
+        <h2 class="main-website-title">Explore Rockridge Global School</h2>
+        <p class="main-website-description">
+          Beyond our preschool programs, Rockridge Global School offers comprehensive education 
+          from early years through primary grades. Visit our main website to learn about our 
+          full range of programs, curriculum, and educational approach.
+        </p>
+        <div class="main-website-features">
+          <div class="main-website-feature">
+            <span class="main-website-feature-icon">🎓</span>
+            <span>Cambridge Curriculum & International Standards</span>
+          </div>
+          <div class="main-website-feature">
+            <span class="main-website-feature-icon">🌟</span>
+            <span>Holistic Development Programs</span>
+          </div>
+          <div class="main-website-feature">
+            <span class="main-website-feature-icon">👨‍🏫</span>
+            <span>Experienced & Qualified Teachers</span>
+          </div>
+          <div class="main-website-feature">
+            <span class="main-website-feature-icon">🎨</span>
+            <span>Co-Curricular & Enrichment Activities</span>
+          </div>
+        </div>
+        <div class="main-website-cta">
+          <a href="https://rockridgeglobalschool.com/" target="_blank" rel="noopener noreferrer" class="main-website-btn">
+            Visit Main Website →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATIONS GRID -->
+  <div class="locations-container">
+    <div class="section-header">
+      <!-- <div class="section-kicker">Choose Your Campus</div> -->
+      <h2 class="section-title">Where Learning Comes to Life</h2>
+      <p class="section-sub">
+        Each of our locations offers a unique, nurturing environment with state-of-the-art facilities, 
+        experienced educators, and a curriculum designed to help your child thrive.
+      </p>
+    </div>
+
+    <div class="locations-grid">
+      <!-- Bachupally Card -->
+      <div class="location-card">
+        <img 
+          src="/assets/Images/bachupally/11.jpg" 
+          alt="Rockridge Global Preschool Bachupally Campus" 
+          class="location-card-image"
+          loading="lazy"
+        />
+        <div class="location-card-content">
+          <h3 class="location-card-title">Bachupally Branch</h3>
+          <p class="location-card-description">
+            Our Bachupally campus is a premier preschool facility offering a warm, secure environment 
+            where children explore, learn, and grow through play-based learning and personalized attention.
+          </p>
+          <div class="location-card-details">
+            <div class="location-detail-item">
+              <span class="location-detail-icon">📍</span>
+              <div class="location-detail-text">
+                <strong>Address:</strong><br />
+                PLOT NO 855/A, Lahari Green Park Rd, opp. Gothik Pangea, Bowrampet,<br />
+                Bachupally, Hyderabad, Telangana 500118
+              </div>
+            </div>
+            <div class="location-detail-item">
+              <span class="location-detail-icon">📞</span>
+              <div class="location-detail-text">
+                <strong>Phone:</strong> <a href="tel:08367677799" style="color: var(--primary); text-decoration: none;">083676 77799</a>
+              </div>
+            </div>
+            <div class="location-detail-item">
+              <span class="location-detail-icon">⏰</span>
+              <div class="location-detail-text">
+                <strong>Hours:</strong> Monday to Friday, 8:30 AM to 1:00 PM
+              </div>
+            </div>
+            <div class="location-detail-item">
+              <span class="location-detail-icon">🎓</span>
+              <div class="location-detail-text">
+                <strong>Programs:</strong> Ages 2-5 years
+              </div>
+            </div>
+          </div>
+          <div class="location-card-actions">
+            <a href="/bachupally/" class="location-btn location-btn-primary">
+              Learn More →
+            </a>
+            <a 
+              href="https://maps.app.goo.gl/QKoMmyKX8RVaEqgj6" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="location-btn location-btn-secondary"
+            >
+              View on Map
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Manikonda Card -->
+      <div class="location-card">
+        <img 
+          src="/assets/Images/manikonda/1.jpg" 
+          alt="Rockridge Global Preschool Manikonda Campus" 
+          class="location-card-image"
+          loading="lazy"
+        />
+        <div class="location-card-content">
+          <h3 class="location-card-title">Manikonda Branch</h3>
+          <p class="location-card-description">
+            Our Manikonda campus provides a modern, stimulating learning environment with bright classrooms, 
+            experienced teachers, and an activity-based curriculum that encourages creativity and independence.
+          </p>
+          <div class="location-card-details">
+            <div class="location-detail-item">
+              <span class="location-detail-icon">📍</span>
+              <div class="location-detail-text">
+                <strong>Address:</strong><br />
+                Plot No: #4-13/29/3, Tanasha Nagar Huda colony, Near Baptist Church, opp. Apmas,<br />
+                Dream Valley Rd, Manikonda, Telangana 500089
+              </div>
+            </div>
+            <div class="location-detail-item">
+              <span class="location-detail-icon">📞</span>
+              <div class="location-detail-text">
+                <strong>Phone:</strong> <a href="tel:07337477799" style="color: var(--primary); text-decoration: none;">073374 77799</a>
+              </div>
+            </div>
+            <div class="location-detail-item">
+              <span class="location-detail-icon">⏰</span>
+              <div class="location-detail-text">
+                <strong>Hours:</strong> Monday to Friday, 8:30 AM to 1:00 PM
+              </div>
+            </div>
+            <div class="location-detail-item">
+              <span class="location-detail-icon">🎓</span>
+              <div class="location-detail-text">
+                <strong>Programs:</strong> Ages 2-5 years
+              </div>
+            </div>
+          </div>
+          <div class="location-card-actions">
+            <a href="/manikonda/" class="location-btn location-btn-primary">
+              Learn More →
+            </a>
+            <a 
+              href="https://maps.app.goo.gl/z8sHDW83VfzmZwxRA" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="location-btn location-btn-secondary"
+            >
+              View on Map
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer style="max-width: 1200px; margin: 0 auto; padding: 40px 20px;">
+    <span>© Rockridge Global Preschool · All rights reserved.</span>
+    <span>
+      <span>📸</span> Follow us on Instagram &amp; Facebook
+    </span>
+  </footer>
+</body>
+</html>
