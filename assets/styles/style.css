@@ -546,7 +546,7 @@
         display: flex;
         justify-content: space-between;
         gap: 12px;
-        padding: 12px 0;
+        padding: 9px 0;
         border-bottom: 1px dashed rgba(148, 163, 184, 0.6);
     }
 
@@ -557,6 +557,14 @@
     .schedule-time {
         font-weight: 600;
         white-space: nowrap;
+    }
+
+    .time-color-mani {
+        color: rgb(255, 0, 0);
+    }
+
+    .time-color-bachu {
+        color: rgb(0, 0, 255);
     }
 
     .schedule-activity {
