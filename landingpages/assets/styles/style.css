@@ -797,7 +797,7 @@
     .testimonial-card {
         background: var(--white);
         border-radius: var(--radius-lg);
-        padding: 24px;
+        padding: 20px;
         box-shadow: 0 9px 20px rgba(15, 23, 42, 0.08);
         position: relative;
         transition: all 0.3s ease;
@@ -807,9 +807,11 @@
         max-width: calc(50% - 10px);
         scroll-snap-align: start;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        gap: 16px;
         height: auto;
         box-sizing: border-box;
+        align-items: flex-start;
     }
 
     .testimonial-card:hover {
@@ -817,41 +819,101 @@
         box-shadow: 0 14px 32px rgba(15, 23, 42, 0.12);
     }
 
-    .testimonial-profile {
+    .testimonial-left {
+        flex: 0 0 15%;
         display: flex;
-        justify-content: center;
-        margin-bottom: 16px;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
     }
 
     .profile-icon {
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
         background: linear-gradient(135deg, var(--primary), var(--accent));
         color: var(--white);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         font-weight: 700;
         box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
         transition: transform 0.3s ease;
+        margin-bottom: 8px;
     }
 
     .testimonial-card:hover .profile-icon {
         transform: scale(1.1);
     }
 
+    .testimonial-name {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        font-weight: 600;
+        margin: 0;
+        line-height: 1.4;
+        word-wrap: break-word;
+    }
+
+    .testimonial-right {
+        flex: 0 0 85%;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+
+    .quote-mark {
+        position: absolute;
+        font-size: 2.5rem;
+        opacity: 0.08;
+        top: -8px;
+        right: 8px;
+        color: var(--primary);
+        line-height: 1;
+    }
+
+    .testimonial-content {
+        display: flex;
+        flex-direction: column;
+    }
+
     .testimonial-quote {
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         color: var(--text-main);
-        margin-bottom: 16px;
+        margin: 0;
         line-height: 1.6;
-        flex-grow: 1;
         word-wrap: break-word;
         overflow-wrap: break-word;
         hyphens: auto;
-        overflow: visible;
+        overflow: hidden;
+    }
+
+    .testimonial-quote.truncated {
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .show-more-btn {
+        background: none;
+        border: none;
+        color: var(--primary);
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        padding: 8px 0;
+        margin-top: 8px;
+        text-align: left;
+        align-self: flex-start;
+        transition: color 0.3s ease;
+    }
+
+    .show-more-btn:hover {
+        color: var(--primary-dark);
+        text-decoration: underline;
     }
 
     .testimonial-meta {
@@ -860,16 +922,6 @@
         font-weight: 600;
         text-align: center;
         margin-top: auto;
-    }
-
-    .quote-mark {
-        position: absolute;
-        font-size: 3rem;
-        opacity: 0.08;
-        top: 16px;
-        right: 20px;
-        color: var(--primary);
-        line-height: 1;
     }
 
     .testimonials-nav {
@@ -1301,6 +1353,34 @@
             width: 100%;
             min-width: 100%;
             max-width: 100%;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .testimonial-left {
+            flex: 0 0 auto;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .testimonial-right {
+            flex: 1;
+            width: 100%;
+        }
+
+        .testimonial-name {
+            font-size: 0.8rem;
+            text-align: left;
+        }
+
+        .profile-icon {
+            width: 45px;
+            height: 45px;
+            font-size: 1.2rem;
+            margin-bottom: 0;
         }
 
         .faq-grid {

@@ -680,6 +680,76 @@ function formatWhatsAppMessage(data, branchDetails) {
       resizeTimer = setTimeout(() => {
         createDots(); // Recreate dots when viewport changes
         goToSlide(currentSlideIndex);
+        initShowMore(); // Reinitialize show more functionality
       }, 250);
     });
+  });
+
+  // Show More/Less functionality for testimonials
+  document.addEventListener('DOMContentLoaded', function() {
+    function initShowMore() {
+      const testimonialCards = document.querySelectorAll('.testimonial-card');
+      
+      testimonialCards.forEach(card => {
+        const quote = card.querySelector('.testimonial-quote');
+        const showMoreBtn = card.querySelector('.show-more-btn');
+        
+        if (!quote || !showMoreBtn) return;
+        
+        // Check if content has data-truncate attribute (long content)
+        const shouldTruncate = quote.hasAttribute('data-truncate') || quote.textContent.length > 200;
+        
+        if (shouldTruncate) {
+          // Store full text
+          const fullText = quote.textContent;
+          quote.dataset.fullText = fullText;
+          
+          // Set initial truncated state
+          quote.classList.add('truncated');
+          showMoreBtn.style.display = 'block';
+          showMoreBtn.textContent = 'Show more';
+          
+          // Remove existing event listeners by cloning
+          const newBtn = showMoreBtn.cloneNode(true);
+          showMoreBtn.parentNode.replaceChild(newBtn, showMoreBtn);
+          
+          // Add click handler
+          newBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            if (quote.classList.contains('truncated')) {
+              // Expand
+              quote.classList.remove('truncated');
+              quote.textContent = quote.dataset.fullText;
+              newBtn.textContent = 'Show less';
+            } else {
+              // Collapse
+              quote.classList.add('truncated');
+              newBtn.textContent = 'Show more';
+            }
+          });
+        } else {
+          // Content is short, hide button
+          showMoreBtn.style.display = 'none';
+        }
+      });
+    }
+    
+    // Initialize on load
+    initShowMore();
+    
+    // Re-initialize when carousel moves (in case new cards come into view)
+    const carousel = document.getElementById('testimonialsCarousel');
+    if (carousel) {
+      // Use MutationObserver to watch for changes
+      const observer = new MutationObserver(() => {
+        initShowMore();
+      });
+      
+      observer.observe(carousel, {
+        childList: true,
+        subtree: true
+      });
+    }
   });
