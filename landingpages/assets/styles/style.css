@@ -3,6 +3,7 @@
         --primary-dark: #1d4ed8;
         --accent: #fbbf24;
         --bg-soft: #f9fafb;
+        --bg-testimonial: #d1d1d131;
         --text-main: #111827;
         --text-muted: #6b7280;
         --white: #ffffff;
@@ -21,7 +22,7 @@
         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
             sans-serif;
         color: var(--text-main);
-        background: var(--bg-soft);
+        background: var(--white);
         line-height: 1.5;
         scroll-behavior: smooth;
     }
@@ -332,6 +333,7 @@
     /* SECTION WRAPPER / HEADINGS */
     section {
         margin-bottom: 80px;
+        background: transparent;
     }
 
     .fade-in {
@@ -795,10 +797,10 @@
     }
 
     .testimonial-card {
-        background: var(--white);
+        background: var(--bg-testimonial);
         border-radius: var(--radius-lg);
         padding: 20px;
-        box-shadow: 0 9px 20px rgba(15, 23, 42, 0.08);
+        /* box-shadow: 0 0px 20px rgba(15, 23, 42, 0.08); */
         position: relative;
         transition: all 0.3s ease;
         flex: 0 0 calc(50% - 10px);
@@ -816,11 +818,11 @@
 
     .testimonial-card:hover {
         transform: translateY(-4px);
-        box-shadow: 0 14px 32px rgba(15, 23, 42, 0.12);
+        /* box-shadow: 0 14px 32px rgba(15, 23, 42, 0.12); */
     }
 
     .testimonial-left {
-        flex: 0 0 15%;
+        flex: 0 0 20%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -857,7 +859,7 @@
     }
 
     .testimonial-right {
-        flex: 0 0 85%;
+        flex: 0 0 80%;
         display: flex;
         flex-direction: column;
         position: relative;
@@ -892,6 +894,7 @@
     .testimonial-quote.truncated {
         display: -webkit-box;
         -webkit-line-clamp: 4;
+        line-clamp: 4;
         -webkit-box-orient: vertical;
         text-overflow: ellipsis;
         overflow: hidden;

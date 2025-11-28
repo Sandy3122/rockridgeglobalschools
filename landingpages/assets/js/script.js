@@ -687,29 +687,48 @@ function formatWhatsAppMessage(data, branchDetails) {
 
   // Show More/Less functionality for testimonials
   document.addEventListener('DOMContentLoaded', function() {
+    function collapseAllCards() {
+      const testimonialCards = document.querySelectorAll('.testimonial-card');
+      testimonialCards.forEach(card => {
+        const quote = card.querySelector('.testimonial-quote');
+        const showMoreBtn = card.querySelector('.show-more-btn');
+        
+        if (quote && showMoreBtn && quote.dataset.fullText) {
+          // Collapse the card
+          quote.classList.add('truncated');
+          if (showMoreBtn.textContent === 'Show less') {
+            showMoreBtn.textContent = 'Show more';
+          }
+        }
+      });
+    }
+    
     function initShowMore() {
       const testimonialCards = document.querySelectorAll('.testimonial-card');
       
-      testimonialCards.forEach(card => {
+      testimonialCards.forEach((card, index) => {
         const quote = card.querySelector('.testimonial-quote');
         const showMoreBtn = card.querySelector('.show-more-btn');
         
         if (!quote || !showMoreBtn) return;
         
-        // Check if content has data-truncate attribute (long content)
-        const shouldTruncate = quote.hasAttribute('data-truncate') || quote.textContent.length > 200;
+        // Check if content has data-truncate attribute or is long
+        const shouldTruncate = quote.hasAttribute('data-truncate') || quote.textContent.trim().length > 200;
         
         if (shouldTruncate) {
-          // Store full text
-          const fullText = quote.textContent;
-          quote.dataset.fullText = fullText;
+          // Store full text if not already stored
+          if (!quote.dataset.fullText) {
+            quote.dataset.fullText = quote.textContent.trim();
+          }
           
-          // Set initial truncated state
-          quote.classList.add('truncated');
+          // Ensure button is visible
           showMoreBtn.style.display = 'block';
           showMoreBtn.textContent = 'Show more';
           
-          // Remove existing event listeners by cloning
+          // Set initial truncated state
+          quote.classList.add('truncated');
+          
+          // Remove any existing event listeners by removing and re-adding
           const newBtn = showMoreBtn.cloneNode(true);
           showMoreBtn.parentNode.replaceChild(newBtn, showMoreBtn);
           
@@ -719,12 +738,11 @@ function formatWhatsAppMessage(data, branchDetails) {
             e.stopPropagation();
             
             if (quote.classList.contains('truncated')) {
-              // Expand
+              // Expand - remove truncated class to show full content
               quote.classList.remove('truncated');
-              quote.textContent = quote.dataset.fullText;
               newBtn.textContent = 'Show less';
             } else {
-              // Collapse
+              // Collapse - add truncated class to hide extra content
               quote.classList.add('truncated');
               newBtn.textContent = 'Show more';
             }
@@ -732,6 +750,7 @@ function formatWhatsAppMessage(data, branchDetails) {
         } else {
           // Content is short, hide button
           showMoreBtn.style.display = 'none';
+          quote.classList.remove('truncated');
         }
       });
     }
@@ -739,17 +758,42 @@ function formatWhatsAppMessage(data, branchDetails) {
     // Initialize on load
     initShowMore();
     
-    // Re-initialize when carousel moves (in case new cards come into view)
+    // Collapse all when carousel navigates
     const carousel = document.getElementById('testimonialsCarousel');
+    const prevBtn = document.getElementById('testimonialPrev');
+    const nextBtn = document.getElementById('testimonialNext');
+    
     if (carousel) {
-      // Use MutationObserver to watch for changes
-      const observer = new MutationObserver(() => {
-        initShowMore();
+      // Collapse on scroll (when user scrolls carousel)
+      let scrollTimeout;
+      carousel.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          collapseAllCards();
+        }, 150);
       });
       
-      observer.observe(carousel, {
-        childList: true,
-        subtree: true
-      });
+      // Collapse on button click
+      if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+          setTimeout(collapseAllCards, 200);
+        });
+      }
+      
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+          setTimeout(collapseAllCards, 200);
+        });
+      }
+      
+      // Collapse on dot click
+      const dotsContainer = document.getElementById('testimonialsDots');
+      if (dotsContainer) {
+        dotsContainer.addEventListener('click', (e) => {
+          if (e.target.classList.contains('testimonial-dot')) {
+            setTimeout(collapseAllCards, 200);
+          }
+        });
+      }
     }
   });
