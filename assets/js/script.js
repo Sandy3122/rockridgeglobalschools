@@ -685,6 +685,155 @@ function formatWhatsAppMessage(data, branchDetails) {
     });
   });
 
+  // Video Auto-play on Scroll and Fullscreen Handling
+  document.addEventListener('DOMContentLoaded', function() {
+    const video = document.getElementById('schoolVideo');
+    const videoSection = document.getElementById('video');
+    
+    if (video && videoSection) {
+      let hasPlayed = false;
+      
+      // Create Intersection Observer for video auto-play
+      const videoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Video is in view, try to play
+            if (video.paused) {
+              const playPromise = video.play();
+              
+              if (playPromise !== undefined) {
+                playPromise
+                  .then(() => {
+                    // Video started playing successfully
+                    hasPlayed = true;
+                  })
+                  .catch(error => {
+                    // Auto-play was prevented, user interaction required
+                    console.log('Video auto-play prevented:', error);
+                    // Video will play when user clicks play button
+                  });
+              }
+            }
+          } else {
+            // Video is out of view, pause it (but not if in fullscreen)
+            if (!video.paused && !isFullscreen()) {
+              video.pause();
+            }
+          }
+        });
+      }, {
+        threshold: 0.3, // Trigger when 30% of video section is visible
+        rootMargin: '0px'
+      });
+      
+      // Observe the video section
+      videoObserver.observe(videoSection);
+      
+      // Fullscreen handling
+      function isFullscreen() {
+        return !!(document.fullscreenElement || 
+                 document.webkitFullscreenElement || 
+                 document.mozFullScreenElement || 
+                 document.msFullscreenElement);
+      }
+      
+      // Handle fullscreen change events
+      function handleFullscreenChange() {
+        if (isFullscreen()) {
+          // Entered fullscreen - video will use CSS :fullscreen pseudo-class
+          // Ensure video maintains aspect ratio and fills screen properly
+          const orientation = video.dataset.orientation;
+          
+          // The CSS will handle the fullscreen styling with object-fit: contain
+          // This ensures portrait videos show properly in portrait mode
+          // and landscape videos show properly in landscape mode
+          
+          // Optional: Request orientation lock based on video orientation
+          // (Commented out to let users control their device orientation)
+          /*
+          if (screen.orientation && screen.orientation.lock) {
+            if (orientation === 'portrait') {
+              screen.orientation.lock('portrait').catch(() => {});
+            } else if (orientation === 'landscape') {
+              screen.orientation.lock('landscape').catch(() => {});
+            }
+          }
+          */
+        } else {
+          // Exited fullscreen - styles will reset automatically via CSS
+          // Optional: Unlock orientation
+          /*
+          if (screen.orientation && screen.orientation.unlock) {
+            screen.orientation.unlock().catch(() => {});
+          }
+          */
+        }
+      }
+      
+      // Listen for fullscreen changes
+      document.addEventListener('fullscreenchange', handleFullscreenChange);
+      document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+      document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+      document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+      
+      // Handle video metadata loaded to get actual dimensions
+      video.addEventListener('loadedmetadata', function() {
+        const videoWidth = video.videoWidth;
+        const videoHeight = video.videoHeight;
+        const aspectRatio = videoWidth / videoHeight;
+        
+        // Store aspect ratio for fullscreen handling
+        video.dataset.aspectRatio = aspectRatio;
+        
+        // Determine if video is portrait or landscape
+        if (aspectRatio < 1) {
+          // Portrait video
+          video.dataset.orientation = 'portrait';
+        } else {
+          // Landscape video
+          video.dataset.orientation = 'landscape';
+        }
+      });
+      
+      // Ensure video element (not container) enters fullscreen
+      // The native fullscreen button will handle this, but we can add a custom handler if needed
+      video.addEventListener('webkitbeginfullscreen', function() {
+        // iOS Safari fullscreen started
+      });
+      
+      video.addEventListener('webkitendfullscreen', function() {
+        // iOS Safari fullscreen ended
+      });
+      
+      // Auto-restart video when it ends
+      video.addEventListener('ended', function() {
+        // Reset video to beginning
+        video.currentTime = 0;
+        
+        // Check if video section is still in view before auto-restarting
+        const rect = videoSection.getBoundingClientRect();
+        const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+        
+        if (isInView) {
+          // Video section is still in view, restart playback
+          const playPromise = video.play();
+          
+          if (playPromise !== undefined) {
+            playPromise
+              .then(() => {
+                // Video restarted successfully
+                console.log('Video auto-restarted');
+              })
+              .catch(error => {
+                // Auto-restart was prevented
+                console.log('Video auto-restart prevented:', error);
+              });
+          }
+        }
+      });
+    }
+  });
+
   // Show More/Less functionality for testimonials
   document.addEventListener('DOMContentLoaded', function() {
     function collapseAllCards() {
