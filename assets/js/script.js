@@ -311,19 +311,20 @@ function formatWhatsAppMessage(data, branchDetails) {
     }
   });
 
-  // Gallery Lightbox Functionality
+  // Gallery and Feature Images Lightbox Functionality
   document.addEventListener('DOMContentLoaded', function() {
     const galleryItems = document.querySelectorAll('.gallery-item');
+    const featureCards = document.querySelectorAll('.feature-card');
     const lightbox = document.getElementById('galleryLightbox');
     const lightboxImage = document.getElementById('lightboxImage');
     const lightboxCounter = document.getElementById('lightboxCounter');
     
     console.log('Gallery items found:', galleryItems.length);
+    console.log('Feature cards found:', featureCards.length);
     console.log('Lightbox element:', lightbox);
     
-    if (!galleryItems.length || !lightbox || !lightboxImage || !lightboxCounter) {
-      console.warn('Gallery lightbox elements not found', {
-        galleryItems: galleryItems.length,
+    if (!lightbox || !lightboxImage || !lightboxCounter) {
+      console.warn('Lightbox elements not found', {
         lightbox: !!lightbox,
         lightboxImage: !!lightboxImage,
         lightboxCounter: !!lightboxCounter
@@ -336,24 +337,48 @@ function formatWhatsAppMessage(data, branchDetails) {
     const nextBtn = lightbox.querySelector('.lightbox-nav.next');
     
     let currentIndex = 0;
-    const images = Array.from(galleryItems).map((item, idx) => {
+    const images = [];
+    
+    // Collect gallery images
+    Array.from(galleryItems).forEach((item, idx) => {
       const img = item.querySelector('img');
       if (!img) {
         console.warn('No img found in gallery item', idx);
-        return null;
+        return;
       }
-      // Use getAttribute to get the original src, not the resolved URL
       const src = img.getAttribute('src') || img.src;
-      return {
+      images.push({
         src: src,
-        alt: img.getAttribute('alt') || img.alt || 'Gallery image'
-      };
-    }).filter(img => img !== null);
+        alt: img.getAttribute('alt') || img.alt || 'Gallery image',
+        type: 'gallery',
+        index: idx
+      });
+    });
+    
+    // Collect feature card images
+    Array.from(featureCards).forEach((card, idx) => {
+      const img = card.querySelector('.feature-image');
+      if (!img) {
+        console.warn('No feature image found in card', idx);
+        return;
+      }
+      const src = img.getAttribute('src') || img.src;
+      images.push({
+        src: src,
+        alt: img.getAttribute('alt') || img.alt || 'Feature image',
+        type: 'feature',
+        index: idx
+      });
+    });
 
-    console.log('Images array:', images);
+    console.log('Total images array:', images.length);
 
     function openLightbox(index) {
       console.log('Opening lightbox at index:', index);
+      if (images.length === 0) {
+        console.warn('No images available for lightbox');
+        return;
+      }
       if (index < 0 || index >= images.length) {
         console.warn('Invalid index:', index);
         return;
@@ -396,6 +421,13 @@ function formatWhatsAppMessage(data, branchDetails) {
       const img = item.querySelector('img');
       if (!img) return;
       
+      // Find the image index in the combined images array
+      const imageIndex = images.findIndex(imgData => 
+        imgData.type === 'gallery' && imgData.index === index
+      );
+      
+      if (imageIndex === -1) return;
+      
       // Make both clickable
       item.style.cursor = 'pointer';
       img.style.cursor = 'pointer';
@@ -404,16 +436,40 @@ function formatWhatsAppMessage(data, branchDetails) {
       item.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        console.log('Gallery item clicked, index:', index);
-        openLightbox(index);
+        console.log('Gallery item clicked, index:', imageIndex);
+        openLightbox(imageIndex);
       });
       
       // Also add to img for redundancy
       img.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        console.log('Gallery image clicked, index:', index);
-        openLightbox(index);
+        console.log('Gallery image clicked, index:', imageIndex);
+        openLightbox(imageIndex);
+      });
+    });
+    
+    // Open lightbox on feature card image click
+    featureCards.forEach((card, index) => {
+      const img = card.querySelector('.feature-image');
+      if (!img) return;
+      
+      // Find the image index in the combined images array
+      const imageIndex = images.findIndex(imgData => 
+        imgData.type === 'feature' && imgData.index === index
+      );
+      
+      if (imageIndex === -1) return;
+      
+      // Make only the image clickable (not the entire card to avoid accidental clicks)
+      img.style.cursor = 'pointer';
+      
+      // Add click handler to the image
+      img.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('Feature image clicked, index:', imageIndex);
+        openLightbox(imageIndex);
       });
     });
 
