@@ -165,7 +165,7 @@ function formatWhatsAppMessage(data, branchDetails) {
      }
      
      // Basic phone validation (should be at least 10 digits)
-     const phoneDigits = phone.replace(/\D/g, '');
+     const phoneDigits = phone.replace(/\\D/g, '');
      if (phoneDigits.length < 10) {
        showFormMessage(form, 'error', 'Please enter a valid mobile number.');
        return;
@@ -196,35 +196,50 @@ function formatWhatsAppMessage(data, branchDetails) {
     };
     
     try {
-      // Get branch details and WhatsApp number
-      const branchDetails = getBranchDetails(data.preferredBranch, data.sourceBranch);
-      const whatsappNumber = getWhatsAppNumber(data.preferredBranch, data.sourceBranch);
-      
-      // Format WhatsApp message
-      const whatsappMessage = formatWhatsAppMessage(data, branchDetails);
-      
-      // Encode message for URL
-      const encodedMessage = encodeURIComponent(whatsappMessage);
-      
-      // Create WhatsApp URL
-      const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-      
-      // Open WhatsApp in a new window/tab
-      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-      
-      // Show success message
-      showFormMessage(form, 'success', 'Opening WhatsApp... Please send the message to complete your enquiry.');
-      
-      // Reset form after a short delay
-      setTimeout(() => {
-        form.reset();
-      }, 1000);
+      // Try to send email via API
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+
+        window.location.href = '/thank-you';
+
+        // Email sent successfully
+        // showFormMessage(form, 'success', '✅ Thank you! Redirecting...');
+        
+        // Redirect to thank you page after a short delay
+        // setTimeout(() => {
+        //   window.location.href = '/thank-you';
+        // }, 1000);
+        
+      } else {
+        // Email API failed - show error message
+        console.error('Email API failed:', result.error);
+        showFormMessage(form, 'error', 'Sorry, there was an error submitting your enquiry. Please call us directly or try again.');
+        
+        // Reset form
+        setTimeout(() => {
+          form.reset();
+        }, 3000);
+      }
       
     } catch (error) {
       console.error('Form submission error:', error);
       
-      // Show error message
-      showFormMessage(form, 'error', 'Sorry, there was an error. Please call us directly or try again later.');
+      // Network error or API unavailable - show error message
+      showFormMessage(form, 'error', 'Sorry, there was an error submitting your enquiry. Please call us directly or try again.');
+      
+      // Reset form
+      setTimeout(() => {
+        form.reset();
+      }, 3000);
     } finally {
       // Re-enable submit button
       submitButton.disabled = false;
@@ -233,7 +248,7 @@ function formatWhatsAppMessage(data, branchDetails) {
    };
  }
  
- // Show form message (success or error)
+ // Show form message (success, error, or info)
  function showFormMessage(form, type, message) {
    // Remove any existing messages
    const existingMessage = form.querySelector('.form-message');
@@ -245,15 +260,23 @@ function formatWhatsAppMessage(data, branchDetails) {
    const messageEl = document.createElement('div');
    messageEl.className = `form-message form-message-${type}`;
    messageEl.textContent = message;
+   
+   // Style based on message type
+   let styles = '';
+   if (type === 'success') {
+     styles = 'background-color: #d1fae5; color: #065f46; border: 1px solid #10b981;';
+   } else if (type === 'error') {
+     styles = 'background-color: #fee2e2; color: #991b1b; border: 1px solid #ef4444;';
+   } else if (type === 'info') {
+     styles = 'background-color: #dbeafe; color: #1e40af; border: 1px solid #3b82f6;';
+   }
+   
    messageEl.style.cssText = `
      padding: 12px 16px;
      margin-top: 16px;
      border-radius: 8px;
      font-size: 0.9rem;
-     ${type === 'success' 
-       ? 'background-color: #d1fae5; color: #065f46; border: 1px solid #10b981;' 
-       : 'background-color: #fee2e2; color: #991b1b; border: 1px solid #ef4444;'
-     }
+     ${styles}
    `;
    
    // Insert message before submit button or at the end of form
@@ -264,9 +287,9 @@ function formatWhatsAppMessage(data, branchDetails) {
      form.appendChild(messageEl);
    }
    
-   // Auto-remove message after 5 seconds
+   // Auto-remove message after 5 seconds (unless it has child elements like WhatsApp button)
    setTimeout(() => {
-     if (messageEl.parentElement) {
+     if (messageEl.parentElement && messageEl.children.length === 0) {
        messageEl.remove();
      }
    }, 5000);
@@ -736,7 +759,7 @@ function formatWhatsAppMessage(data, branchDetails) {
       resizeTimer = setTimeout(() => {
         createDots(); // Recreate dots when viewport changes
         goToSlide(currentSlideIndex);
-        initShowMore(); // Reinitialize show more functionality
+        // initShowMore(); // Reinitialize show more functionality
       }, 250);
     });
   });

@@ -1,0 +1,32 @@
+{
+  "name": "rockridge-global-preschool",
+  "version": "1.0.0",
+  "description": "Rockridge Global Preschool Website with Node.js Backend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "build": "echo 'No build needed'",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemailer": "^6.9.7",
+    "dotenv": "^16.3.1",
+    "cors": "^2.8.5",
+    "body-parser": "^1.20.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "keywords": [
+    "preschool",
+    "education",
+    "rockridge"
+  ],
+  "author": "Rockridge Global Preschool",
+  "license": "ISC",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
