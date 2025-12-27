@@ -14,10 +14,18 @@
       "use": "@vercel/static"
     }
   ],
-  "rewrites": [
+  "routes": [
     {
-      "source": "/api/(.*)",
-      "destination": "/server.js"
+      "src": "/bachupally/?",
+      "dest": "/bachupally/index.html"
+    },
+    {
+      "src": "/manikonda/?",
+      "dest": "/manikonda/index.html"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/server.js"
     }
   ],
   "headers": [
