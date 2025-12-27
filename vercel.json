@@ -40,6 +40,10 @@
       "destination": "/manikonda/index.html"
     },
     {
+      "source": "/thank-you",
+      "destination": "/thank-you.html"
+    },
+    {
       "source": "/api/(.*)",
       "destination": "/server.js"
     }
