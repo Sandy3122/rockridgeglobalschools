@@ -10,6 +10,14 @@
       "use": "@vercel/static"
     },
     {
+      "src": "bachupally/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "manikonda/**",
+      "use": "@vercel/static"
+    },
+    {
       "src": "assets/**",
       "use": "@vercel/static"
     }
