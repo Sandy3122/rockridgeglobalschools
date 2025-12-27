@@ -14,18 +14,26 @@
       "use": "@vercel/static"
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/bachupally/?",
-      "dest": "/bachupally/index.html"
+      "source": "/bachupally",
+      "destination": "/bachupally/index.html"
     },
     {
-      "src": "/manikonda/?",
-      "dest": "/manikonda/index.html"
+      "source": "/bachupally/",
+      "destination": "/bachupally/index.html"
     },
     {
-      "src": "/api/(.*)",
-      "dest": "/server.js"
+      "source": "/manikonda",
+      "destination": "/manikonda/index.html"
+    },
+    {
+      "source": "/manikonda/",
+      "destination": "/manikonda/index.html"
+    },
+    {
+      "source": "/api/(.*)",
+      "destination": "/server.js"
     }
   ],
   "headers": [
