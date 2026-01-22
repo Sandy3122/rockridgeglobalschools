@@ -43,6 +43,18 @@
     gtag('config', 'AW-575597615');
   </script>
 
+  <!-- Google Ads Conversion Tracking -->
+  <script>
+    function gtag_report_conversion() {
+      gtag('event', 'conversion', {
+        send_to: 'AW-575597615/_At4COmBjOkbEK_Yu5IC',
+        value: 1.0,
+        currency: 'INR'
+      });
+    }
+  </script>
+  <!-- End Google Ads Conversion Tracking -->
+
   <!-- Open Graph / Facebook / WhatsApp -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.rockridgeglobalschool.in/manikonda/" />
@@ -181,7 +193,7 @@
                 <textarea id="heroMessage" name="message" placeholder="Tell us about your child..."></textarea>
               </div>
               <div class="form-row full-width">
-                <button type="submit" class="btn-primary" style="width:100%; padding: 10px;">
+                <button type="submit" class="btn-primary" style="width:100%; padding: 10px;" onclick="gtag_report_conversion()">
                   Enquire Now – Schedule My Tour
                 </button>
               </div>
@@ -805,7 +817,7 @@
               placeholder="Tell us about your child or what you're looking for..."></textarea>
           </div>
           <div class="form-row full-width">
-            <button type="submit" class="btn-primary" style="width:100%; padding: 10px;">
+            <button type="submit" class="btn-primary" style="width:100%; padding: 10px;" onclick="gtag_report_conversion()">
               Enquire Now – Schedule My Tour
             </button>
           </div>
