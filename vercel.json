@@ -18,6 +18,10 @@
       "use": "@vercel/static"
     },
     {
+      "src": "nallagandla/**",
+      "use": "@vercel/static"
+    },
+    {
       "src": "assets/**",
       "use": "@vercel/static"
     }
@@ -38,6 +42,14 @@
     {
       "source": "/manikonda/",
       "destination": "/manikonda/index.html"
+    },
+    {
+      "source": "/nallagandla",
+      "destination": "/nallagandla/index.html"
+    },
+    {
+      "source": "/nallagandla/",
+      "destination": "/nallagandla/index.html"
     },
     {
       "source": "/thank-you",
