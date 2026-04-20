@@ -12,7 +12,13 @@ const WHATSAPP_CONFIG = {
     phone: '917337477799',
     display: '073374 77799',
     address: 'Plot No: #4-13/29/3, Tanasha Nagar Huda colony, Near Baptist Church, opp. Apmas, Dream Valley Rd, Manikonda, Telangana 500089'
+  },
+  nallagandla: {
+    phone: '918367577799',
+    display: '083675 77799',
+    address: 'Sai Ram Nagar Colony, Plot No 27, Gopan Pally, opp. Navodaya Vidyalaya Samithi, Tellapur, Hyderabad, Nallagandla, Telangana 500046'
   }
+
 };
 
 /**
@@ -30,6 +36,9 @@ function detectSourceBranch() {
   if (body.classList.contains('manikonda-page')) {
     return 'Manikonda';
   }
+  if (body.classList.contains('nallagandla-page')) {
+    return 'Nallagandla';
+  }
   
   // Fallback: check URL path
   if (url.includes('bachupally')) {
@@ -37,6 +46,9 @@ function detectSourceBranch() {
   }
   if (url.includes('manikonda')) {
     return 'Manikonda';
+  }
+  if (url.includes('nallagandla')) {
+    return 'Nallagandla';
   }
   
   return 'Unknown';
@@ -56,13 +68,19 @@ function getWhatsAppNumber(preferredBranch, sourceBranch) {
   if (preferredBranch && preferredBranch.toLowerCase().includes('manikonda')) {
     return WHATSAPP_CONFIG.manikonda.phone;
   }
-  
+
+  if (url.includes('nallagandla')) {
+    return 'Nallagandla';
+  }
   // Otherwise, use source branch
   if (sourceBranch === 'Bachupally') {
     return WHATSAPP_CONFIG.bachupally.phone;
   }
   if (sourceBranch === 'Manikonda') {
     return WHATSAPP_CONFIG.manikonda.phone;
+  }
+  if (sourceBranch === 'Nallagandla') {
+    return WHATSAPP_CONFIG.nallagandla.phone;
   }
   
   // Default to Bachupally
@@ -144,30 +162,139 @@ function formatWhatsAppMessage(data, branchDetails) {
   return message;
 }
 
+/**
+ * Apply consistent HTML validation rules for enquiry forms.
+ * This runs for both hero and contact forms across all branch pages.
+ */
+function applyFormValidationRules(form) {
+  const parentNameInput = form.querySelector('input[name="parentName"]');
+  const phoneInput = form.querySelector('input[name="phone"]');
+  const branchSelect = form.querySelector('select[name="preferredBranch"]');
+  const ageSelect = form.querySelector('select[name="childAge"]');
+  const messageField = form.querySelector('textarea[name="message"]');
+
+  if (parentNameInput) {
+    parentNameInput.required = true;
+    parentNameInput.minLength = 2;
+    parentNameInput.maxLength = 60;
+    parentNameInput.pattern = "^[A-Za-z][A-Za-z\\s'.-]{1,59}$";
+    parentNameInput.setAttribute('title', 'Please enter a valid name (at least 2 letters).');
+  }
+
+  if (phoneInput) {
+    phoneInput.required = true;
+    // Accept +91 with spaces/hyphens, but enforce at least 10 digits in JS too.
+    phoneInput.pattern = "^[+]?[0-9\\s-]{10,15}$";
+    phoneInput.inputMode = 'numeric';
+    phoneInput.maxLength = 15;
+    phoneInput.setAttribute('title', 'Please enter a valid mobile number.');
+  }
+
+  if (branchSelect) {
+    branchSelect.required = true;
+  }
+
+  if (ageSelect) {
+    ageSelect.required = true;
+  }
+
+  if (messageField) {
+    messageField.maxLength = 500;
+  }
+}
+
+function validateFormData(form, formData) {
+  const parentName = (formData.get('parentName') || '').trim();
+  const phone = (formData.get('phone') || '').trim();
+  const preferredBranch = (formData.get('preferredBranch') || '').trim();
+  const childAge = (formData.get('childAge') || '').trim();
+  const message = (formData.get('message') || '').trim();
+
+  if (parentName.length < 2) {
+    return { valid: false, message: 'Please enter parent name (at least 2 characters).' };
+  }
+
+  if (!/^[A-Za-z][A-Za-z\s'.-]{1,59}$/.test(parentName)) {
+    return { valid: false, message: 'Please enter a valid parent name.' };
+  }
+
+  const phoneDigits = phone.replace(/\D/g, '');
+  if (phoneDigits.length !== 10 && !(phone.startsWith('+') && phoneDigits.length >= 11 && phoneDigits.length <= 13)) {
+    return { valid: false, message: 'Please enter a valid mobile number.' };
+  }
+
+  if (!preferredBranch) {
+    return { valid: false, message: 'Please select a preferred branch.' };
+  }
+
+  if (!childAge) {
+    return { valid: false, message: "Please select your child's age." };
+  }
+
+  if (message.length > 500) {
+    return { valid: false, message: 'Message is too long. Please keep it under 500 characters.' };
+  }
+
+  return { valid: true };
+}
+
+function clearEnquiryFormState(form) {
+  if (!form) return;
+
+  form.reset();
+
+  // Extra cleanup for browsers restoring values from bfcache/autofill
+  const fields = form.querySelectorAll('input, select, textarea');
+  fields.forEach((field) => {
+    if (field.tagName === 'SELECT') {
+      field.selectedIndex = 0;
+      return;
+    }
+
+    if (field.type === 'checkbox' || field.type === 'radio') {
+      field.checked = false;
+      return;
+    }
+
+    field.value = '';
+  });
+
+  const existingMessage = form.querySelector('.form-message');
+  if (existingMessage) {
+    existingMessage.remove();
+  }
+}
+
+function clearAllEnquiryForms() {
+  const heroForm = document.getElementById('heroEnquiryForm');
+  const contactForm = document.getElementById('contactEnquiryForm');
+
+  clearEnquiryFormState(heroForm);
+  clearEnquiryFormState(contactForm);
+}
+
  // Form submission handler
  function handleFormSubmit(form, formType) {
    return async function(e) {
      e.preventDefault();
      
-     // Basic form validation
+    // Clear browser-level custom validity state if any
+    const invalidElement = form.querySelector(':invalid');
+    if (invalidElement) {
+      invalidElement.setCustomValidity('');
+    }
+
+    // Browser native validation first
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    // Enhanced business validation
      const formData = new FormData(form);
-     const parentName = formData.get('parentName') || formData.get('heroParentName') || '';
-     const phone = formData.get('phone') || formData.get('heroPhone') || '';
-     
-     if (!parentName.trim()) {
-       showFormMessage(form, 'error', 'Please enter your name.');
-       return;
-     }
-     
-     if (!phone.trim()) {
-       showFormMessage(form, 'error', 'Please enter your mobile number.');
-       return;
-     }
-     
-     // Basic phone validation (should be at least 10 digits)
-     const phoneDigits = phone.replace(/\\D/g, '');
-     if (phoneDigits.length < 10) {
-       showFormMessage(form, 'error', 'Please enter a valid mobile number.');
+    const validation = validateFormData(form, formData);
+    if (!validation.valid) {
+      showFormMessage(form, 'error', validation.message);
        return;
      }
      
@@ -183,8 +310,8 @@ function formatWhatsAppMessage(data, branchDetails) {
     
     // Collect form data
     const data = {
-      parentName: parentName.trim(),
-      phone: phone.trim(),
+      parentName: (formData.get('parentName') || '').trim(),
+      phone: (formData.get('phone') || '').trim(),
       preferredBranch: formData.get('preferredBranch') || formData.get('heroPreferredBranch') || '',
       childAge: formData.get('childAge') || formData.get('heroChildAge') || '',
       preferredTime: formData.get('preferredTime') || formData.get('heroPreferredTime') || '',
@@ -208,6 +335,7 @@ function formatWhatsAppMessage(data, branchDetails) {
       const result = await response.json();
 
       if (response.ok && result.success) {
+        clearEnquiryFormState(form);
 
         window.location.href = '/thank-you';
 
@@ -562,13 +690,24 @@ function formatWhatsAppMessage(data, branchDetails) {
     // Hero form (Quick Enquiry)
     const heroForm = document.getElementById('heroEnquiryForm');
     if (heroForm) {
+      heroForm.setAttribute('autocomplete', 'off');
+      applyFormValidationRules(heroForm);
       heroForm.addEventListener('submit', handleFormSubmit(heroForm, 'Quick Enquiry (Hero)'));
     }
     
     // Contact form
     const contactForm = document.getElementById('contactEnquiryForm');
     if (contactForm) {
+      contactForm.setAttribute('autocomplete', 'off');
+      applyFormValidationRules(contactForm);
       contactForm.addEventListener('submit', handleFormSubmit(contactForm, 'Contact Form'));
+    }
+  });
+
+  // Clear restored form values when user navigates back from thank-you or other pages.
+  window.addEventListener('pageshow', function(event) {
+    if (event.persisted || (performance.getEntriesByType && performance.getEntriesByType('navigation')[0]?.type === 'back_forward')) {
+      clearAllEnquiryForms();
     }
   });
 

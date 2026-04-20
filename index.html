@@ -31,18 +31,18 @@
   <!-- Primary Meta Tags -->
   <meta name="title" content="Rockridge Global Preschool – Our Locations" />
   <meta name="description"
-    content="Rockridge Global Preschool offers quality early childhood education in Bachupally and Manikonda. Nurturing young minds with play-based learning, qualified teachers, and safe environments." />
+    content="Rockridge Global Preschool offers quality early childhood education in Bachupally, Manikonda, and Nallagandla. Nurturing young minds with play-based learning, qualified teachers, and safe environments." />
 
   <!-- Open Graph / Facebook / WhatsApp -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.rockridgeglobalschool.in/" />
   <meta property="og:title" content="Rockridge Global Preschool – Our Locations" />
   <meta property="og:description"
-    content="Rockridge Global Preschool offers quality early childhood education in Bachupally and Manikonda. Nurturing young minds with play-based learning, qualified teachers, and safe environments." />
-  <meta property="og:image" content="https://www.rockridgeglobalschool.in/assets/Images/rockridgeschool.png" />
+    content="Rockridge Global Preschool offers quality early childhood education in Bachupally, Manikonda, and Nallagandla. Nurturing young minds with play-based learning, qualified teachers, and safe environments." />
+  <meta property="og:image" content="https://www.rockridgeglobalschool.in/assets/Images/rockridgeschool.webp" />
   <meta property="og:image:secure_url"
-    content="https://www.rockridgeglobalschool.in/assets/Images/rockridgeschool.png" />
-  <meta property="og:image:type" content="image/png" />
+    content="https://www.rockridgeglobalschool.in/assets/Images/rockridgeschool.webp" />
+  <meta property="og:image:type" content="image/webp" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Rockridge Global Preschool" />
@@ -53,8 +53,8 @@
   <meta name="twitter:url" content="https://www.rockridgeglobalschool.in/" />
   <meta name="twitter:title" content="Rockridge Global Preschool – Our Locations" />
   <meta name="twitter:description"
-    content="Rockridge Global Preschool offers quality early childhood education in Bachupally and Manikonda. Nurturing young minds with play-based learning, qualified teachers, and safe environments." />
-  <meta name="twitter:image" content="https://www.rockridgeglobalschool.in/assets/Images/rockridgeschool.png" />
+    content="Rockridge Global Preschool offers quality early childhood education in Bachupally, Manikonda, and Nallagandla. Nurturing young minds with play-based learning, qualified teachers, and safe environments." />
+  <meta name="twitter:image" content="https://www.rockridgeglobalschool.in/assets/Images/rockridgeschool.webp" />
   <meta name="twitter:image:alt" content="Rockridge Global Preschool" />
 
   <link rel="stylesheet" href="/assets/styles/style.css">
@@ -106,14 +106,24 @@
     .locations-container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0px 20px 30px 20px;
+      padding: 0 20px 42px;
+    }
+
+    .nav-logo img {
+      width: 44px;
+      height: 44px;
+    }
+
+    .nav-title {
+      white-space: nowrap;
     }
 
     .locations-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 40px;
-      margin-top: 40px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 28px;
+      margin-top: 32px;
+      align-items: stretch;
     }
 
     .location-card {
@@ -157,20 +167,21 @@
     }
 
     .location-card-content {
-      padding: 32px;
+      padding: 24px 22px 22px;
       display: flex;
       flex-direction: column;
       flex: 1;
     }
 
     .location-card-title {
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       font-weight: 700;
       color: var(--primary-dark);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
       gap: 10px;
+      line-height: 1.25;
     }
 
     .location-card-title::before {
@@ -179,25 +190,25 @@
     }
 
     .location-card-description {
-      font-size: 1rem;
+      font-size: 0.98rem;
       color: var(--text-muted);
-      line-height: 1.7;
-      margin-bottom: 24px;
+      line-height: 1.6;
+      margin-bottom: 18px;
       flex: 1;
     }
 
     .location-card-details {
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      margin-bottom: 24px;
+      gap: 12px;
+      margin-bottom: 18px;
     }
 
     .location-detail-item {
       display: flex;
       align-items: flex-start;
-      gap: 12px;
-      font-size: 0.95rem;
+      gap: 10px;
+      font-size: 0.93rem;
     }
 
     .location-detail-icon {
@@ -208,7 +219,8 @@
 
     .location-detail-text {
       color: var(--text-main);
-      line-height: 1.6;
+      line-height: 1.5;
+      word-break: break-word;
     }
 
     .location-detail-text strong {
@@ -218,7 +230,7 @@
 
     .location-card-actions {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
       margin-top: auto;
     }
@@ -226,10 +238,10 @@
     .location-btn {
       flex: 1;
       min-width: 140px;
-      padding: 14px 24px;
+      padding: 12px 18px;
       border-radius: 12px;
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       text-align: center;
       text-decoration: none;
       transition: all 0.3s ease;
@@ -446,7 +458,7 @@
       }
 
       .location-card-content {
-        padding: 24px;
+        padding: 20px 18px 18px;
       }
 
       .location-card-image {
@@ -454,7 +466,7 @@
       }
 
       .location-card-title {
-        font-size: 1.5rem;
+      font-size: 1.35rem;
       }
 
       .location-card-actions {
@@ -463,6 +475,11 @@
 
       .location-btn {
         width: 100%;
+      }
+
+      .nav-logo img {
+        width: 40px;
+        height: 40px;
       }
     }
 
@@ -525,12 +542,13 @@
   <header class="topnav">
     <div class="nav-container">
       <div class="nav-logo">
-        <img src="/assets/Images/ROCKRIDGE-LOGO.png" alt="Rockridge Global Preschool Logo" />
+        <img src="/assets/Images/ROCKRIDGE-LOGO.webp" alt="Rockridge Global Preschool Logo" />
         <span class="nav-title">Rockridge Global Preschool</span>
       </div>
       <nav class="nav-links">
         <a href="/bachupally/">Bachupally</a>
         <a href="/manikonda/">Manikonda</a>
+        <a href="/nallagandla/">Nallagandla</a>
       </nav>
     </div>
   </header>
@@ -548,7 +566,7 @@
     <div class="main-website-content">
       <div class="main-website-image-wrapper">
         <a href="https://www.rockridgeglobalschool.in/" target="_blank" rel="noopener noreferrer">
-          <img src="/assets/Images/rockridgeschool.png" alt="Rockridge Global School - Main Website" loading="lazy" />
+          <img src="/assets/Images/rockridgeschool.webp" alt="Rockridge Global School - Main Website" loading="lazy" />
         </a>
       </div>
       <div class="main-website-text">
@@ -694,6 +712,56 @@
               Learn More →
             </a>
             <a href="https://maps.app.goo.gl/z8sHDW83VfzmZwxRA" target="_blank" rel="noopener noreferrer"
+              class="location-btn location-btn-secondary">
+              View on Map
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nallagandla Card -->
+      <div class="location-card">
+        <img src="/assets/Images/nallagandla/1.webp" alt="Rockridge Global Preschool Nallagandla Campus"
+          class="location-card-image" loading="lazy" />
+        <div class="location-card-content">
+          <h3 class="location-card-title">Nallagandla Branch</h3>
+          <p class="location-card-description">
+            Our Nallagandla campus offers a safe, warm learning environment where children build confidence,
+            communication, and foundational skills through joyful activity-based learning.
+          </p>
+          <div class="location-card-details">
+            <div class="location-detail-item">
+              <span class="location-detail-icon">📍</span>
+              <div class="location-detail-text">
+                <strong>Address:</strong><br />
+                Nallagandla, Hyderabad, Telangana
+              </div>
+            </div>
+            <div class="location-detail-item">
+              <span class="location-detail-icon">📞</span>
+              <div class="location-detail-text">
+                <strong>Phone:</strong> <a href="tel:8367577799"
+                  style="color: var(--primary); text-decoration: none;">83675 77799</a>
+              </div>
+            </div>
+            <div class="location-detail-item">
+              <span class="location-detail-icon">⏰</span>
+              <div class="location-detail-text">
+                <strong>Hours:</strong> Monday to Friday, 9:00 AM to 4:00 PM
+              </div>
+            </div>
+            <div class="location-detail-item">
+              <span class="location-detail-icon">🎓</span>
+              <div class="location-detail-text">
+                <strong>Programs:</strong> Ages 2-7 years
+              </div>
+            </div>
+          </div>
+          <div class="location-card-actions">
+            <a href="/nallagandla/" class="location-btn location-btn-primary">
+              Learn More →
+            </a>
+            <a href="https://maps.app.goo.gl/NwEj4w9PDTtCjVBb6?g_st=iw" target="_blank" rel="noopener noreferrer"
               class="location-btn location-btn-secondary">
               View on Map
             </a>

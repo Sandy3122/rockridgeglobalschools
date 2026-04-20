@@ -37,14 +37,32 @@ app.get('/manikonda/', (req, res) => {
   res.sendFile(path.join(__dirname, 'manikonda', 'index.html'));
 });
 
+app.get('/nallagandla', (req, res) => {
+  res.sendFile(path.join(__dirname, 'nallagandla', 'index.html'));
+});
+
+app.get('/nallagandla/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'nallagandla', 'index.html'));
+});
+
 app.get('/thank-you', (req, res) => {
   res.sendFile(path.join(__dirname, 'thank-you.html'));
 });
 
 // Helper functions
-function getRecipientEmail(preferredBranch) {
-  // All emails go to the same address
-  return process.env.EMAIL_ADMIN || 'gohyacademytools@gmail.com';
+function getRecipientEmails(preferredBranch) {
+  // All enquiries can be routed to one or more admin emails.
+  // Supports comma/semicolon separated values in EMAIL_ADMIN.
+  const rawRecipients = process.env.EMAIL_ADMIN || 'gohyacademytools@gmail.com';
+
+  const recipients = rawRecipients
+    .split(/[;,]/)
+    .map((email) => email.trim())
+    .filter(Boolean)
+    .filter((email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
+
+  // Deduplicate while preserving order
+  return [...new Set(recipients)];
 }
 
 function formatPhoneNumber(phone) {
@@ -320,9 +338,9 @@ app.post('/api/send-email', async (req, res) => {
     }
 
     // Get recipient email
-    const recipientEmail = getRecipientEmail(data.preferredBranch);
+    const recipientEmails = getRecipientEmails(data.preferredBranch);
     
-    if (!recipientEmail) {
+    if (!recipientEmails.length) {
       console.error('No recipient email configured');
       return res.status(500).json({
         success: false,
@@ -377,7 +395,7 @@ app.post('/api/send-email', async (req, res) => {
 
     const mailOptions = {
       from: `"${process.env.EMAIL_FROM_NAME || 'Rockridge Global Preschool'}" <${process.env.SMTP_USER}>`,
-      to: recipientEmail,
+      to: recipientEmails.join(', '),
       replyTo: process.env.EMAIL_FROM || process.env.SMTP_USER,
       subject: `🎓 New Enquiry: ${data.parentName} - ${branchName}`,
       text: generateEmailText(data),
@@ -393,7 +411,7 @@ app.post('/api/send-email', async (req, res) => {
     try {
       const info = await Promise.race([sendPromise, timeoutPromise]);
       console.log('✅ Email sent successfully:', info.messageId);
-      console.log('📬 Email sent to:', recipientEmail);
+      console.log('📬 Email sent to:', recipientEmails.join(', '));
 
       // Return success
       return res.status(200).json({
